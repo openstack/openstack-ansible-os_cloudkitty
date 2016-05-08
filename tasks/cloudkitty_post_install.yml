@@ -1,0 +1,59 @@
+---
+# Copyright 2016, Rackspace US, Inc.
+#
+# (C) 2016 Michael Rice <michael.rice@rackspace.com>
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+- name: Drop cloudkitty Config(s)
+  config_template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ cloudkitty_system_user_name }}"
+    group: "{{ cloudkitty_system_group_name }}"
+    mode: "0644"
+    config_overrides: "{{ item.config_overrides }}"
+    config_type: "{{ item.config_type }}"
+  with_items:
+    - src: "cloudkitty.conf.j2"
+      dest: "/etc/cloudkitty/cloudkitty.conf"
+      config_overrides: "{{ cloudkitty_cloudkitty_conf_overrides }}"
+      config_type: "ini"
+    - src: "api-paste.ini.j2"
+      dest: "/etc/cloudkitty/api-paste.ini"
+      config_overrides: "{{ cloudkitty_api_paste_ini_overrides }}"
+      config_type: "ini"
+    - src: "policy.json.j2"
+      dest: "/etc/cloudkitty/policy.json"
+      config_overrides: "{{ cloudkitty_policy_overrides }}"
+      config_type: "json"
+  notify:
+    - Restart cloudkitty services
+  tags:
+    - cloudkitty-config
+
+- name: Get cloudkitty command path
+  command: which cloudkitty
+  register: cloudkitty_command_path
+  when:
+    - not cloudkitty_venv_enabled | bool
+  tags:
+    - cloudkitty-command-bin
+
+- name: Set cloudkitty command path
+  set_fact:
+    cloudkitty_bin: "{{ cloudkitty_command_path.stdout | dirname }}"
+  when:
+    - not cloudkitty_venv_enabled | bool
+  tags:
+    - cloudkitty-command-bin
