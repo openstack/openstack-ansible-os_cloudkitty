@@ -1,199 +1,53 @@
 # {{ ansible_managed }}
 
 [DEFAULT]
-api_paste_config = {{ cloudkitty_api_paste_config }}
-auth_strategy = {{ cloudkitty_auth_strategy }}
-host = {{ cloudkitty_host }}
-rpc_conn_pool_size = {{ cloudkitty_rpc_conn_pool_size }}
-rpc_zmq_bind_address = {{ cloudkitty_rpc_zmq_bind_address }}
-rpc_zmq_matchmaker = {{ cloudkitty_rpc_zmq_matchmaker }}
-rpc_zmq_port = {{ cloudkitty_rpc_zmq_port }}
-rpc_zmq_contexts = {{ cloudkitty_rpc_zmq_contexts }}
-rpc_zmq_topic_backlog = {{ cloudkitty_rpc_zmq_topic_backlog }}
-rpc_zmq_ipc_dir = {{ cloudkitty_rpc_zmq_ipc_dir }}
-rpc_zmq_host = {{ cloudkitty_rpc_zmq_host }}
-rpc_cast_timeout = {{ cloudkitty_rpc_cast_timeout }}
-matchmaker_heartbeat_freq = {{ cloudkitty_matchmaker_heartbeat_freq }}
-matchmaker_heartbeat_ttl = {{ cloudkitty_matchmaker_heartbeat_ttl }}
-executor_thread_pool_size = {{ cloudkitty_executor_thread_pool_size }}
-notification_driver = {{ cloudkitty_notification_driver }}
+debug = {{ debug }}
 notification_topics = {{ cloudkitty_notification_topics }}
-rpc_response_timeout = {{ cloudkitty_rpc_response_timeout }}
-transport_url = {{ cloudkitty_transport_url }}
 rpc_backend = {{ cloudkitty_rpc_backend }}
-control_exchange = {{ cloudkitty_control_exchange }}
-
 [api]
-host_ip = {{ cloudkitty_api_host_ip }}
-port = {{ cloudkitty_api_port }}
-
 [collect]
-collector = {{ cloudkitty_collector }}
-window = {{ cloudkitty_window }}
-period = {{ cloudkitty_period }}
-wait_periods = {{ cloudkitty_wait_periods }}
 services = {{ cloudkitty_services }}
-
+collector = {{ cloudkitty_collector }}
 [cors]
-allowed_origin = {{ cloudkitty_cors_allowed_origin }}
-allow_credentials = {{ cloudkitty_cors_allow_credentials }}
-expose_headers = {{ cloudkitty_cors_expose_headers }}
-max_age = {{ cloudkitty_cors_max_age }}
-allow_methods = {{ cloudkitty_cors_allow_methods }}
-allow_headers = {{ cloudkitty_cors_allow_headers }}
-
-
 [cors.subdomain]
-allowed_origin = {{ cloudkitty_cors_subdomain_allowed_origin }}
-allow_credentials = {{ cloudkitty_cors_subdomain_allow_credentials }}
-expose_headers = {{ cloudkitty_cors_subdomain_expose_headers }}
-max_age = {{ cloudkitty_cors_subdomain_max_age }}
-allow_methods = {{ cloudkitty_cors_subdomain_allow_methods }}
-allow_headers = {{ cloudkitty_cors_subdomain_allow_headers }}
-
 [database]
-sqlite_db = {{ cloudkitty_sqlite_db }}
-sqlite_synchronous = {{ cloudkitty_sqlite_synchronous }}
-backend = {{ cloudkitty_database_backend }}
 connection = {{ cloudkitty_database_connection }}
-slave_connection = {{ cloudkitty_database_slave_connection }}
-mysql_sql_mode = {{ cloudkitty_mysql_sql_mode }}
-idle_timeout = {{ cloudkitty_database_idle_timeout }}
-min_pool_size = {{ cloudkitty_database_min_pool_size }}
-max_pool_size = {{ cloudkitty_database_max_pool_size }}
-max_retries = {{ cloudkitty_database_max_retries }}
-retry_interval = {{ cloudkitty_database_retry_interval }}
-max_overflow = {{ cloudkitty_database_max_overflow }}
-connection_debug = {{ cloudkitty_database_connection_debug }}
-connection_trace = {{ cloudkitty_database_connection_trace }}
-pool_timeout = {{ cloudkitty_database_pool_timeout }}
-use_db_reconnect = {{ cloudkitty_database_use_db_reconnect }}
-db_retry_interval = {{ cloudkitty_database_db_retry_interval }}
-db_inc_retry_interval = {{ cloudkitty_database_db_inc_retry_interval }}
-db_max_retry_interval = {{ cloudkitty_database_db_max_retry_interval }}
-db_max_retries = {{ cloudkitty_database_db_max_retries }}
-
-
 [keystone_authtoken]
-auth_uri = {{ cloudkitty_keystone_authtoken_auth_uri }}
-auth_version = {{ cloudkitty_keystone_authtoken_auth_version }}
-delay_auth_decision = {{ cloudkitty_keystone_authtoken_delay_auth_decision }}
-http_connect_timeout = {{ cloudkitty_keystone_authtoken_http_connect_timeout }}
-http_request_max_retries = {{ cloudkitty_keystone_authtoken_http_request_max_retries }}
-cache = {{ cloudkitty_keystone_authtoken_cache }}
-certfile = {{ cloudkitty_keystone_authtoken_certfile }}
-keyfile = {{ cloudkitty_keystone_authtoken_keyfile }}
-cafile = {{ cloudkitty_keystone_authtoken_cafile }}
-insecure = {{ cloudkitty_keystone_authtoken_insecure }}
-signing_dir = {{ cloudkitty_keystone_authtoken_signing_dir }}
-memcached_servers = {{ cloudkitty_keystone_authtoken_memcached_servers }}
-token_cache_time = {{ cloudkitty_keystone_authtoken_token_cache_time }}
-revocation_cache_time = {{ cloudkitty_keystone_authtoken_revocation_cache_time }}
-memcache_security_strategy = {{ cloudkitty_keystone_authtoken_memcache_security_strategy }}
-memcache_secret_key = {{ cloudkitty_keystone_authtoken_memcache_secret_key }}
-memcache_pool_dead_retry = {{ cloudkitty_keystone_authtoken_memcache_pool_dead_retry }}
-memcache_pool_maxsize = {{ cloudkitty_keystone_authtoken_memcache_pool_maxsize }}
-memcache_pool_socket_timeout = {{ cloudkitty_keystone_authtoken_memcache_pool_unused_timeout }}
-memcache_pool_unused_timeout = {{ cloudkitty_keystone_authtoken_memcache_pool_unused_timeout }}
-memcache_pool_conn_get_timeout = {{ cloudkitty_keystone_authtoken_memcache_pool_conn_get_timeout }}
-memcache_use_advanced_pool = {{ cloudkitty_keystone_authtoken_memcache_use_advanced_pool }}
-include_service_catalog = {{ cloudkitty_keystone_authtoken_include_service_catalog }}
-enforce_token_bind = {{ cloudkitty_keystone_authtoken_enforce_token_bind }}
-check_revocations_for_cached = {{ cloudkitty_keystone_authtoken_check_revocations_for_cached }}
-hash_algorithms = {{ cloudkitty_keystone_authtoken_hash_algorithms }}
-identity_uri = {{ cloudkitty_keystone_authtoken_identity_uri }}
-admin_user = {{ cloudkitty_keystone_authtoken_admin_user }}
-admin_password = {{ cloudkitty_keystone_authtoken_admin_password }}
-admin_tenant_name = {{ cloudkitty_keystone_authtoken_admin_tenant_name }}
-
-
+memcached_servers = 166.78.242.99:11211
+signing_dir = /var/cache/cloudkitty
+cafile = /opt/stack/data/ca-bundle.pem
+auth_uri = http://166.78.242.99:5000
+project_domain_id = default
+project_name = service
+user_domain_id = default
+password = secrete
+username = cloudkitty
+auth_url = http://166.78.242.99:35357
+auth_type = password
 [keystone_fetcher]
-
-keystone_version = {{ cloudkitty_keystone_version }}
-
-
+auth_section = authinfos
 [matchmaker_redis]
-host = {{ cloudkitty_matchmaker_redis_host }}
-port = {{ cloudkitty_matchmaker_redis_port }}
-password = {{ cloudkitty_matchmaker_redis_password }}
-
-
 [matchmaker_ring]
-ringfile = {{ cloudkitty_matchmaker_ring_ringfile }}
-
-
 [oslo_messaging_amqp]
-server_request_prefix = {{ cloudkitty_oslo_messaging_amqp_server_request_prefix }}
-broadcast_prefix = {{ cloudkitty_oslo_messaging_amqp_broadcast_prefix }}
-group_request_prefix = {{ cloudkitty_oslo_messaging_amqp_group_request_prefix }}
-container_name = {{ cloudkitty_oslo_messaging_amqp_container_name }}
-idle_timeout = {{ cloudkitty_oslo_messaging_amqp_idle_timeout }}
-trace = {{ cloudkitty_oslo_messaging_amqp_trace }}
-ssl_ca_file = {{ cloudkitty_oslo_messaging_amqp_ssl_ca_file }}
-ssl_cert_file = {{ cloudkitty_oslo_messaging_amqp_ssl_cert_file }}
-ssl_key_file = {{ cloudkitty_oslo_messaging_amqp_ssl_key_file }}
-ssl_key_password = {{ cloudkitty_oslo_messaging_amqp_ssl_key_password }}
-allow_insecure_clients = {{ cloudkitty_oslo_messaging_amqp_allow_insecure_clients }}
-
-
 [oslo_messaging_qpid]
-amqp_durable_queues = {{ cloudkitty_oslo_messaging_qpid_amqp_durable_queues }}
-amqp_auto_delete = {{ cloudkitty_oslo_messaging_qpid_amqp_auto_delete }}
-send_single_reply = {{ cloudkitty_oslo_messaging_qpid_send_single_reply }}
-qpid_hostname = {{ cloudkitty_oslo_messaging_qpid_qpid_hostname }}
-qpid_port = {{ cloudkitty_oslo_messaging_qpid_qpid_port }}
-qpid_hosts = {{ cloudkitty_oslo_messaging_qpid_qpid_hosts }}
-qpid_username = {{ cloudkitty_oslo_messaging_qpid_qpid_username }}
-qpid_password = {{ cloudkitty_oslo_messaging_qpid_qpid_password }}
-qpid_sasl_mechanisms = {{ cloudkitty_oslo_messaging_qpid_qpid_sasl_mechanisms }}
-qpid_heartbeat = {{ cloudkitty_oslo_messaging_qpid_qpid_heartbeat }}
-qpid_protocol = {{ cloudkitty_oslo_messaging_qpid_qpid_protocol }}
-qpid_tcp_nodelay = {{ cloudkitty_oslo_messaging_qpid_qpid_tcp_nodelay }}
-qpid_receiver_capacity = {{ cloudkitty_oslo_messaging_qpid_qpid_receiver_capacity }}
-qpid_topology_version = {{ cloudkitty_oslo_messaging_qpid_qpid_topology_version }}
-
-
 [oslo_messaging_rabbit]
-amqp_durable_queues = {{ cloudkitty_oslo_messaging_rabbit_amqp_durable_queues }}
-amqp_auto_delete = {{ cloudkitty_oslo_messaging_rabbit_amqp_auto_delete }}
-send_single_reply = {{ cloudkitty_oslo_messaging_rabbit_send_single_reply }}
-kombu_ssl_version = {{ cloudkitty_oslo_messaging_rabbit_kombu_ssl_version }}
-kombu_ssl_keyfile = {{ cloudkitty_oslo_messaging_rabbit_kombu_ssl_keyfile }}
-kombu_ssl_certfile = {{ cloudkitty_oslo_messaging_rabbit_kombu_ssl_certfile }}
-kombu_ssl_ca_certs = {{ cloudkitty_oslo_messaging_rabbit_kombu_ssl_ca_certs }}
-kombu_reconnect_delay = {{ cloudkitty_oslo_messaging_rabbit_kombu_reconnect_delay }}
-kombu_reconnect_timeout = {{ cloudkitty_oslo_messaging_rabbit_kombu_reconnect_timeout }}
-rabbit_host = {{ cloudkitty_oslo_messaging_rabbit_rabbit_host }}
-rabbit_port = {{ cloudkitty_oslo_messaging_rabbit_rabbit_port }}
-rabbit_hosts = {{ cloudkitty_oslo_messaging_rabbit_rabbit_hosts }}
-rabbit_use_ssl = {{ cloudkitty_oslo_messaging_rabbit_rabbit_use_ssl }}
-rabbit_userid = {{ cloudkitty_oslo_messaging_rabbit_rabbit_userid }}
-rabbit_password = {{ cloudkitty_oslo_messaging_rabbit_rabbit_password }}
-rabbit_login_method = {{ cloudkitty_oslo_messaging_rabbit_rabbit_login_method }}
-rabbit_virtual_host = {{ cloudkitty_oslo_messaging_rabbit_rabbit_virtual_host }}
-rabbit_retry_interval = {{ cloudkitty_oslo_messaging_rabbit_rabbit_retry_interval }}
-rabbit_retry_backoff = {{ cloudkitty_oslo_messaging_rabbit_rabbit_retry_backoff }}
-rabbit_max_retries = {{ cloudkitty_oslo_messaging_rabbit_rabbit_max_retries }}
-rabbit_ha_queues = {{ cloudkitty_oslo_messaging_rabbit_rabbit_ha_queues }}
-heartbeat_timeout_threshold = {{ cloudkitty_oslo_messaging_rabbit_heartbeat_timeout_threshold }}
-heartbeat_rate = {{ cloudkitty_oslo_messaging_rabbit_heartbeat_rate }}
-fake_rabbit = {{ cloudkitty_oslo_messaging_rabbit_fake_rabbit }}
-
-
+rabbit_userid = stackrabbit
+rabbit_password = secrete
+rabbit_hosts = 166.78.242.99
 [output]
-backend = {{ cloudkitty_output_backend }}
-basepath = {{ cloudkitty_output_basepath }}
-pipeline = {{ cloudkitty_output_pipeline }}
-
-
+pipeline = osrf
+basepath = /opt/stack/data/cloudkitty/reports
+backend = cloudkitty.backend.file.FileBackend
 [state]
-backend = {{ cloudkitty_state_backend }}
-basepath = {{ cloudkitty_state_basepath }}
-
-
 [storage]
-backend = {{ cloudkitty_storage_backend }}
-
-
 [tenant_fetcher]
-backend = {{ cloudkitty_tenant_fetcher_backend }}
+[authinfos]
+debug = True
+region_name = RegionOne
+tenant_name = service
+password = secrete
+username = cloudkitty
+auth_url = http://166.78.242.99:5000/v2.0/
+auth_plugin = v2password
+[ceilometer_collector]
+auth_section = authinfos

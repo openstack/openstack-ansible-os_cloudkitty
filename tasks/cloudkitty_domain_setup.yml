@@ -30,16 +30,38 @@
     - cloudkitty-domain-setup
     - cloudkitty-config
 
+#- name: Ensure cloudkitty user
+#  keystone:
+#    command: "ensure_user"
+#    user_name: "{{ cloudkitty_username }}"
+#    password: "{{ cloudkitty_user_password }}"
+#    login_user: "{{ keystone_admin_user_name }}"
+#    login_password: "{{ keystone_auth_admin_password }}"
+#    login_project_name: "{{ keystone_admin_tenant_name }}"
+#    endpoint: "{{ keystone_service_adminurl }}"
+#    insecure: "{{ keystone_service_adminuri_insecure }}"
+#  tags:
+#    - cloudkitty-domain
+#    - cloudkitty-domain-setup
+#    - cloudkitty-config
+#    - cloudkitty-command-bin
+# TODO Change the keystone library to support adding
+# a user to a domain without specifying a project
 - name: Ensure cloudkitty user
-  keystone:
-    command: "ensure_user"
-    user_name: "{{ cloudkitty_username }}"
-    password: "{{ cloudkitty_user_password }}"
-    login_user: "{{ keystone_admin_user_name }}"
-    login_password: "{{ keystone_auth_admin_password }}"
-    login_project_name: "{{ keystone_admin_tenant_name }}"
-    endpoint: "{{ keystone_service_adminurl }}"
-    insecure: "{{ keystone_service_adminuri_insecure }}"
+  shell: |
+    . {{ ansible_env.HOME }}/openrc
+    {{ cloudkitty_bin }}/openstack {{ keystone_service_adminuri_insecure | bool | ternary('--insecure','') }}\
+              --os-identity-api-version=3 \
+              --os-auth-url={{ keystone_service_adminurl }} \
+              --os-project-name={{ cloudkitty_project_name }} \
+              --os-project-domain-name={{ cloudkitty_project_domain_name }} \
+              --os-user-domain-name={{ cloudkitty_user_domain_name }} \
+              user \
+              create \
+              --or-show \
+              --domain {{ cloudkitty_user_domain_name }} \
+              --password {{ cloudkitty_user_password }} \
+              "{{ cloudkitty_username }}"
   tags:
     - cloudkitty-domain
     - cloudkitty-domain-setup
@@ -84,6 +106,7 @@
     command: "ensure_endpoint"
     service_name: "CloudKitty"
     service_type: "rating"
+    region_name: "{{ service_region }}"
     endpoint_list:
           - url: "{{ cloudkitty_service_publicurl }}"
             interface: "public"
