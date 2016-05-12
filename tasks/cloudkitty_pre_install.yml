@@ -105,3 +105,13 @@
   tags:
     - cloudkitty-usage-install
     - cloudkitty-usage-install-pip-packages
+
+- name: Create cloudkitty report dir
+  file:
+    path: "{{ cloudkitty_output_basepath }}"
+    state: directory
+    owner: "{{ cloudkitty_system_user_name }}"
+    group: "{{ cloudkitty_system_group_name }}"
+    mode: 0755
+  tags:
+    - cloudkitty-dirs

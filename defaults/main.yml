@@ -14,26 +14,40 @@
 # limitations under the License.
 cloudkitty_username: cloudkitty
 cloudkitty_user_password: secrete
+
+cloudkitty_rabbitmq_userid: cloudkitty
 cloudkitty_rabbitmq_password: secrete
+
 cloudkitty_system_group_name: cloudkitty
 cloudkitty_system_user_name: cloudkitty
 cloudkitty_system_comment: meow
 cloudkitty_system_shell: /bin/false
+
 cloudkitty_venv_tag: untagged
 cloudkitty_venv_dir: "/openstack/venvs/cloudkitty-{{ cloudkitty_venv_tag }}"
+
 cloudkitty_git_repo: https://github.com/openstack/cloudkitty.git
 cloudkitty_git_install_branch: master
+
 cloudkitty_requirements_git_repo: https://git.openstack.org/openstack/requirements
 cloudkitty_requirements_git_install_branch: master
+
 cloudkitty_developer_mode: false
 cloudkitty_notification_topics: openstack
-cloudkitty_services: nova
+cloudkitty_services: compute
 cloudkitty_collector: ceilometer
 cloudkitty_project_name: admin
 cloudkitty_project_domain_name: Default
+cloudkitty_service_project_domain_id: default
+cloudkitty_service_project_name: "service"
+cloudkitty_service_user_domain_id: default
+
 cloudkitty_user_domain_name: Default
-cloudkitty_domain_admin_password: secrete
-cloudkitty_domain_admin: stack_domain_admin
+cloudkitty_keystone_auth_plugin: password
+cloudkitty_keystone_trustee_auth_plugin: v2password
+cloudkitty_output_backend: cloudkitty.backend.file.FileBackend
+cloudkitty_output_pipline: osrf
+cloudkitty_output_basepath: /var/cloudkitty/reports
 
 cloudkitty_galera_database: cloudkitty
 cloudkitty_galera_user: cloudkitty
@@ -58,11 +72,9 @@ cloudkitty_cloudkitty_conf_overrides: {}
 cloudkitty_policy_overrides: {}
 cloudkitty_api_paste_ini_overrides: {}
 cloudkitty_service_names: []
-cloudkitty_developer_constraints:
-  "git+{{ cloudkitty_git_repo }}@{{ cloudkitty_git_install_branch }}#egg=cloudkitty"
 
 cloudkitty_pip_packages:
-  - "{{ cloudkitty_developer_constraints }}"
+  - cloudkitty
   - tooz
   - msgpack-python
   - keystonemiddleware

@@ -4,50 +4,68 @@
 debug = {{ debug }}
 notification_topics = {{ cloudkitty_notification_topics }}
 rpc_backend = {{ cloudkitty_rpc_backend }}
+
 [api]
+port = {{ cloudkitty_service_port }}
+
 [collect]
 services = {{ cloudkitty_services }}
 collector = {{ cloudkitty_collector }}
+
 [cors]
+
 [cors.subdomain]
+
 [database]
 connection = {{ cloudkitty_database_connection }}
+
 [keystone_authtoken]
-memcached_servers = 166.78.242.99:11211
+memcached_servers = {{ memcached_servers }}
 signing_dir = /var/cache/cloudkitty
-cafile = /opt/stack/data/ca-bundle.pem
-auth_uri = http://166.78.242.99:5000
-project_domain_id = default
-project_name = service
-user_domain_id = default
-password = secrete
-username = cloudkitty
-auth_url = http://166.78.242.99:35357
-auth_type = password
+auth_uri = {{ keystone_service_internaluri }}
+project_domain_id = {{ cloudkitty_service_project_domain_id }}
+project_name = {{ cloudkitty_service_project_name }}
+user_domain_id = {{ cloudkitty_service_user_domain_id }}
+password = {{ cloudkitty_user_password }}
+username = {{ cloudkitty_username }}
+auth_url = {{ keystone_service_adminurl }}
+auth_type = {{ cloudkitty_keystone_auth_plugin }}
+
 [keystone_fetcher]
 auth_section = authinfos
+
 [matchmaker_redis]
+
 [matchmaker_ring]
+
 [oslo_messaging_amqp]
+
 [oslo_messaging_qpid]
+
 [oslo_messaging_rabbit]
-rabbit_userid = stackrabbit
-rabbit_password = secrete
-rabbit_hosts = 166.78.242.99
+rabbit_userid = {{ cloudkitty_rabbitmq_userid }}
+rabbit_password = {{ cloudkitty_rabbitmq_password }}
+rabbit_hosts = {{ rabbitmq_servers }}
+
 [output]
-pipeline = osrf
-basepath = /opt/stack/data/cloudkitty/reports
-backend = cloudkitty.backend.file.FileBackend
+pipeline = {{ cloudkitty_output_pipline }}
+basepath = {{ cloudkitty_output_basepath }}
+backend = {{ cloudkitty_output_backend }}
+
 [state]
+
 [storage]
+
 [tenant_fetcher]
+
 [authinfos]
-debug = True
-region_name = RegionOne
+debug = {{ debug }}
+region_name = {{ service_region }}
 tenant_name = service
-password = secrete
-username = cloudkitty
-auth_url = http://166.78.242.99:5000/v2.0/
-auth_plugin = v2password
+password = {{ cloudkitty_user_password }}
+username = {{ cloudkitty_username }}
+auth_url = {{ keystone_service_adminurl }}
+auth_plugin = {{ cloudkitty_keystone_trustee_auth_plugin }}
+
 [ceilometer_collector]
 auth_section = authinfos

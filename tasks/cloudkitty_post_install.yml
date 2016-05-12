@@ -30,7 +30,7 @@
       config_overrides: "{{ cloudkitty_cloudkitty_conf_overrides }}"
       config_type: "ini"
     - src: "api-paste.ini.j2"
-      dest: "/etc/cloudkitty/api-paste.ini"
+      dest: "/etc/cloudkitty/api_paste.ini"
       config_overrides: "{{ cloudkitty_api_paste_ini_overrides }}"
       config_type: "ini"
     - src: "policy.json.j2"
