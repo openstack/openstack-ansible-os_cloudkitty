@@ -54,7 +54,7 @@
     state: directory
   with_items:
     - { path: "/openstack/venvs" }
-    - { path: "{{ cloudkitty_venv_bin }}" }
+    - { path: "{{ cloudkitty_venv_bin | dirname }}" }
   when: cloudkitty_venv_enabled | bool
   tags:
     - cloudkitty-dirs
@@ -87,24 +87,6 @@
   tags:
     - cloudkitty-dirs
     - cloudkitty-logs
-
-- name: Pip required packages for CloudKitty
-  pip:
-    name: "{{ item }}"
-    state: present
-  register: install_packages
-  until: install_packages|success
-  retries: 5
-  delay: 2
-  with_items:
-    - "{{ cloudkitty_requires_pip_packages }}"
-  when:
-    - cloudkitty_venv_enabled | bool
-  notify:
-#    - Restart cloudkitty api
-  tags:
-    - cloudkitty-usage-install
-    - cloudkitty-usage-install-pip-packages
 
 - name: Create cloudkitty report dir
   file:

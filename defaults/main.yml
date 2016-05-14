@@ -24,13 +24,25 @@ cloudkitty_system_comment: meow
 cloudkitty_system_shell: /bin/false
 
 cloudkitty_venv_tag: untagged
-cloudkitty_venv_dir: "/openstack/venvs/cloudkitty-{{ cloudkitty_venv_tag }}"
+cloudkitty_venv_bin: "/openstack/venvs/cloudkitty-{{ cloudkitty_venv_tag }}/bin"
+
+# Set this to enable or disable installing in a venv
+cloudkitty_venv_enabled: true
+
+# The bin path defaults to the venv path however if installation in a
+#  venv is disabled the bin path will be dynamically set based on the
+#  system path used when the installing.
+cloudkitty_bin: "{{ cloudkitty_venv_bin }}"
+
+cloudkitty_venv_download_url: http://127.0.0.1/venvs/untagged/ubuntu/cloudkitty.tgz
 
 cloudkitty_git_repo: https://github.com/openstack/cloudkitty.git
 cloudkitty_git_install_branch: master
 
 cloudkitty_requirements_git_repo: https://git.openstack.org/openstack/requirements
 cloudkitty_requirements_git_install_branch: master
+cloudkitty_developer_constraints:
+  - "git+{{ cloudkitty_git_repo }}@{{ cloudkitty_requirements_git_install_branch }}#egg=cloudkitty"
 
 cloudkitty_developer_mode: false
 cloudkitty_notification_topics: openstack
@@ -67,7 +79,6 @@ cloudkitty_service_internaluri: "{{ cloudkitty_service_internaluri_proto }}://{{
 cloudkitty_service_internalurl: "{{ cloudkitty_service_internaluri }}/v1/%(tenant_id)s"
 cloudkitty_service_program_name: cloudkitty-api
 
-
 cloudkitty_cloudkitty_conf_overrides: {}
 cloudkitty_policy_overrides: {}
 cloudkitty_api_paste_ini_overrides: {}
@@ -91,20 +102,12 @@ cloudkitty_pip_packages:
   - python-swiftclient
   - python-troveclient
 
-# Name of the virtual env to deploy into
-cloudkitty_venv_bin: "{{ cloudkitty_venv_dir }}/bin"
-
-# Set this to enable or disable installing in a venv
-cloudkitty_venv_enabled: true
-
-# The bin path defaults to the venv path however if installation in a
-#  venv is disabled the bin path will be dynamically set based on the
-#  system path used when the installing.
-cloudkitty_bin: "{{ cloudkitty_venv_bin }}"
-
 cloudkitty_requires_pip_packages:
   - virtualenv
+  - virtualenv-tools
   - python-keystoneclient
+  - httplib2
+
 # The messaging driver to use, defaults to rabbit. Other drivers
 # include qpid and zmq. (string value)
 cloudkitty_rpc_backend: rabbit
