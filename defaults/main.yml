@@ -17,6 +17,7 @@ cloudkitty_user_password: secrete
 
 cloudkitty_rabbitmq_userid: cloudkitty
 cloudkitty_rabbitmq_password: secrete
+cloudkitty_rabbitmq_vhost: /cloudkitty
 
 cloudkitty_system_group_name: cloudkitty
 cloudkitty_system_user_name: cloudkitty
@@ -45,7 +46,7 @@ cloudkitty_developer_constraints:
   - "git+{{ cloudkitty_git_repo }}@{{ cloudkitty_requirements_git_install_branch }}#egg=cloudkitty"
 
 cloudkitty_developer_mode: false
-cloudkitty_notification_topics: openstack
+cloudkitty_notification_topics: notifications
 cloudkitty_services: compute
 cloudkitty_collector: ceilometer
 cloudkitty_project_name: admin

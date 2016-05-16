@@ -32,7 +32,8 @@ auth_url = {{ keystone_service_adminurl }}
 auth_type = {{ cloudkitty_keystone_auth_plugin }}
 
 [keystone_fetcher]
-auth_section = authinfos
+keystone_version = 3
+auth_section = keystone_authtoken
 
 [matchmaker_redis]
 
@@ -46,6 +47,8 @@ auth_section = authinfos
 rabbit_userid = {{ cloudkitty_rabbitmq_userid }}
 rabbit_password = {{ cloudkitty_rabbitmq_password }}
 rabbit_hosts = {{ rabbitmq_servers }}
+rabbit_virtual_host = {{ cloudkitty_rabbitmq_vhost }}
+rabbit_use_ssl = {{ rabbitmq_use_ssl }}
 
 [output]
 pipeline = {{ cloudkitty_output_pipline }}
@@ -58,14 +61,6 @@ backend = {{ cloudkitty_output_backend }}
 
 [tenant_fetcher]
 
-[authinfos]
-debug = {{ debug }}
-region_name = {{ service_region }}
-tenant_name = service
-password = {{ cloudkitty_user_password }}
-username = {{ cloudkitty_username }}
-auth_url = {{ keystone_service_adminurl }}
-auth_plugin = {{ cloudkitty_keystone_trustee_auth_plugin }}
 
 [ceilometer_collector]
-auth_section = authinfos
+auth_section = keystone_authtoken
