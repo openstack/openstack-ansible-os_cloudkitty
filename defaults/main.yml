@@ -62,6 +62,7 @@ cloudkitty_keystone_trustee_auth_plugin: v2password
 cloudkitty_output_backend: cloudkitty.backend.file.FileBackend
 cloudkitty_output_pipline: osrf
 cloudkitty_output_basepath: /var/cloudkitty/reports
+cloudkitty_signing_dir: /var/cache/cloudkitty
 
 cloudkitty_galera_database: cloudkitty
 cloudkitty_galera_user: cloudkitty
@@ -87,8 +88,8 @@ cloudkitty_policy_overrides: {}
 cloudkitty_api_paste_ini_overrides: {}
 cloudkitty_service_name: cloudkitty
 cloudkitty_service_names:
-  - cloudkitty_api
-  - cloudkitty_processor
+  - cloudkitty-api
+  - cloudkitty-processor
 
 cloudkitty_pip_packages:
   - cloudkitty

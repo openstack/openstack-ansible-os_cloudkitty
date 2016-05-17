@@ -21,7 +21,7 @@ connection = {{ cloudkitty_database_connection }}
 
 [keystone_authtoken]
 memcached_servers = {{ memcached_servers }}
-signing_dir = /var/cache/cloudkitty
+signing_dir = {{ cloudkitty_signing_dir }}
 auth_uri = {{ keystone_service_internaluri }}
 project_domain_id = {{ cloudkitty_service_project_domain_id }}
 project_name = {{ cloudkitty_service_project_name }}

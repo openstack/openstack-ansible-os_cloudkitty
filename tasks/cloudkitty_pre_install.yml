@@ -97,3 +97,13 @@
     mode: 0755
   tags:
     - cloudkitty-dirs
+
+- name: Create cloudkitty signing dir
+  file:
+    path: "{{ cloudkitty_signing_dir }}"
+    state: directory
+    owner: "{{ cloudkitty_system_user_name }}"
+    group: "{{ cloudkitty_system_group_name }}"
+    mode: 0700
+  tags:
+    - cloudkitty-dirs
