@@ -13,10 +13,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 cloudkitty_username: cloudkitty
-cloudkitty_user_password: secrete
 
 cloudkitty_rabbitmq_userid: cloudkitty
-cloudkitty_rabbitmq_password: secrete
 cloudkitty_rabbitmq_vhost: /cloudkitty
 
 cloudkitty_system_group_name: cloudkitty
@@ -66,7 +64,6 @@ cloudkitty_signing_dir: /var/cache/cloudkitty
 
 cloudkitty_galera_database: cloudkitty
 cloudkitty_galera_user: cloudkitty
-cloudkitty_galera_password: secrete
 
 cloudkitty_service_port: 8089
 cloudkitty_service_proto: http
@@ -118,12 +115,4 @@ cloudkitty_requires_pip_packages:
 # The messaging driver to use, defaults to rabbit. Other drivers
 # include qpid and zmq. (string value)
 cloudkitty_rpc_backend: rabbit
-# The default exchange under which topics are scoped. May be
-# overridden by an exchange name specified in the transport_url
-# option. (string value)
-cloudkitty_control_exchange: openstack
-# Host serving the API. (string value)
-cloudkitty_api_host_ip: 0.0.0.0
-# Host port serving the API. (integer value)
-cloudkitty_api_port: 8889
 cloudkitty_database_connection: "mysql+pymysql://{{ cloudkitty_galera_user }}:{{ cloudkitty_galera_password }}@{{ cloudkitty_galera_address }}/{{ cloudkitty_galera_database }}?charset=utf8"
