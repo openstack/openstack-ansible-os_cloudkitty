@@ -72,11 +72,11 @@ cloudkitty_service_adminuri_proto: "{{ openstack_service_adminuri_proto | defaul
 cloudkitty_service_internaluri_proto: "{{ openstack_service_internaluri_proto | default(cloudkitty_service_proto) }}"
 cloudkitty_service_type: orchestration
 cloudkitty_service_publicuri: "{{ cloudkitty_service_publicuri_proto }}://{{ external_lb_vip_address }}:{{ cloudkitty_service_port }}"
-cloudkitty_service_publicurl: "{{ cloudkitty_service_publicuri }}/v1/%(tenant_id)s"
+cloudkitty_service_publicurl: "{{ cloudkitty_service_publicuri }}/"
 cloudkitty_service_adminuri: "{{ cloudkitty_service_adminuri_proto }}://{{ internal_lb_vip_address }}:{{ cloudkitty_service_port }}"
-cloudkitty_service_adminurl: "{{ cloudkitty_service_adminuri }}/v1/%(tenant_id)s"
+cloudkitty_service_adminurl: "{{ cloudkitty_service_adminuri }}/"
 cloudkitty_service_internaluri: "{{ cloudkitty_service_internaluri_proto }}://{{ internal_lb_vip_address }}:{{ cloudkitty_service_port }}"
-cloudkitty_service_internalurl: "{{ cloudkitty_service_internaluri }}/v1/%(tenant_id)s"
+cloudkitty_service_internalurl: "{{ cloudkitty_service_internaluri }}/"
 cloudkitty_service_program_name: cloudkitty-api
 cloudkitty_service_processor_program_name: cloudkitty-processor
 

@@ -88,7 +88,7 @@
 - name: Ensure cloudkitty service
   keystone:
     command: "ensure_service"
-    service_name: "CloudKitty"
+    service_name: "cloudkitty"
     service_type: "rating"
     login_user: "{{ keystone_admin_user_name }}"
     login_password: "{{ keystone_auth_admin_password }}"
@@ -104,7 +104,7 @@
 - name: Ensure cloudkitty endpoints
   keystone:
     command: "ensure_endpoint"
-    service_name: "CloudKitty"
+    service_name: "cloudkitty"
     service_type: "rating"
     region_name: "{{ service_region }}"
     endpoint_list:
