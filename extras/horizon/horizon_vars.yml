@@ -1,0 +1,6 @@
+## CloudKitty
+horizon_enable_cloudkitty: False
+
+horizon_pip_packages:
+  - cloudkitty-dashboard
+  - python-cloudkittyclient
