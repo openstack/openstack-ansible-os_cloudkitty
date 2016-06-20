@@ -158,8 +158,8 @@
     - not cloudkitty_developer_mode | bool
     - cloudkitty_venv_enabled | bool
     - cloudkitty_get_venv | changed
-  # notify:
-  #   - Restart cloudkitty api
+  notify:
+    - Restart cloudkitty services
   tags:
     - cloudkitty-install
     - cloudkitty-pip-packages
@@ -191,7 +191,7 @@
     - cloudkitty_venv_enabled | bool
     - cloudkitty_get_venv | failed or cloudkitty_developer_mode | bool
   notify:
-    - Restart cloudkitty api
+    - Restart cloudkitty services
   tags:
     - cloudkitty-install
     - cloudkitty-pip-packages
@@ -210,7 +210,7 @@
     - not cloudkitty_developer_mode | bool
     - not cloudkitty_venv_enabled | bool
   notify:
-    - Restart cloudkitty api
+    - Restart cloudkitty services
   tags:
     - cloudkitty-install
     - cloudkitty-pip-packages

@@ -134,6 +134,8 @@
     cloudkitty_galera_address: 10.100.100.101
     galera_client_drop_config_file: false
     galera_root_password: "secrete"
+    cloudkitty_galera_password: "SuperSecrete"
+    cloudkitty_user_password: "secrete"
     cloudkitty_rabbitmq_password: "secrete"
     cloudkitty_rabbitmq_userid: cloudkitty
     cloudkitty_rabbitmq_vhost: /cloudkitty

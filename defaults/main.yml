@@ -12,6 +12,10 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
+## Verbosity Options
+debug: False
+
 cloudkitty_username: cloudkitty
 
 cloudkitty_rabbitmq_userid: cloudkitty
@@ -65,6 +69,9 @@ cloudkitty_signing_dir: /var/cache/cloudkitty
 cloudkitty_galera_database: cloudkitty
 cloudkitty_galera_user: cloudkitty
 
+## Service Type and Data
+cloudkitty_service_region: RegionOne
+cloudkitty_service_name: cloudkitty
 cloudkitty_service_port: 8089
 cloudkitty_service_proto: http
 cloudkitty_service_publicuri_proto: "{{ openstack_service_publicuri_proto | default(cloudkitty_service_proto) }}"
@@ -83,7 +90,7 @@ cloudkitty_service_processor_program_name: cloudkitty-processor
 cloudkitty_cloudkitty_conf_overrides: {}
 cloudkitty_policy_overrides: {}
 cloudkitty_api_paste_ini_overrides: {}
-cloudkitty_service_name: cloudkitty
+
 cloudkitty_service_names:
   - cloudkitty-api
   - cloudkitty-processor

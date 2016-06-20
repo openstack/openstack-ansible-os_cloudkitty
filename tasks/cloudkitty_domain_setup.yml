@@ -106,7 +106,7 @@
     command: "ensure_endpoint"
     service_name: "cloudkitty"
     service_type: "rating"
-    region_name: "{{ service_region }}"
+    region_name: "{{ cloudkitty_service_region }}"
     endpoint_list:
           - url: "{{ cloudkitty_service_publicurl }}"
             interface: "public"
