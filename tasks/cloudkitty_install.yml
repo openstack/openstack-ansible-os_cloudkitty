@@ -79,7 +79,6 @@
     get_md5: False
   when:
     - not cloudkitty_developer_mode | bool
-    - cloudkitty_venv_enabled | bool
   register: local_venv_stat
   tags:
     - cloudkitty-install
@@ -91,7 +90,6 @@
     return_content: True
   when:
     - not cloudkitty_developer_mode | bool
-    - cloudkitty_venv_enabled | bool
   register: remote_venv_checksum
   tags:
     - cloudkitty-install
@@ -111,7 +109,6 @@
   register: get_venv
   when:
     - not cloudkitty_developer_mode | bool
-    - cloudkitty_venv_enabled | bool
     - (local_venv_stat.stat.exists == False or
         {{ local_venv_stat.stat.checksum is defined and local_venv_stat.stat.checksum != remote_venv_checksum.content | trim }})
   tags:
@@ -121,17 +118,15 @@
 - name: Set cloudkitty get_venv fact
   set_fact:
     cloudkitty_get_venv: "{{ get_venv }}"
-  when: cloudkitty_venv_enabled | bool
   tags:
     - cloudkitty-install
     - cloudkitty-pip-packages
 
 - name: Remove existing venv
   file:
-    path: "{{ cloudkitty_venv_bin | dirname }}"
+    path: "{{ cloudkitty_bin | dirname }}"
     state: absent
   when:
-    - cloudkitty_venv_enabled | bool
     - cloudkitty_get_venv | changed
   tags:
     - cloudkitty-install
@@ -139,12 +134,9 @@
 
 - name: Create cloudkitty venv dir
   file:
-    path: "{{ cloudkitty_venv_bin | dirname }}"
+    path: "{{ cloudkitty_bin | dirname }}"
     state: directory
-  when:
-    - not cloudkitty_developer_mode | bool
-    - cloudkitty_venv_enabled | bool
-    - cloudkitty_get_venv | changed
+  register: cloudkitty_venv_dir
   tags:
     - cloudkitty-install
     - cloudkitty-pip-packages
@@ -152,34 +144,22 @@
 - name: Unarchive pre-built venv
   unarchive:
     src: "/var/cache/{{ cloudkitty_venv_download_url | basename }}"
-    dest: "{{ cloudkitty_venv_bin | dirname }}"
+    dest: "{{ cloudkitty_bin | dirname }}"
     copy: "no"
   when:
     - not cloudkitty_developer_mode | bool
-    - cloudkitty_venv_enabled | bool
-    - cloudkitty_get_venv | changed
+    - cloudkitty_get_venv | changed or cloudkitty_venv_dir | changed
   notify:
     - Restart cloudkitty services
   tags:
     - cloudkitty-install
     - cloudkitty-pip-packages
 
-- name: Update virtualenv path
-  command: >
-    virtualenv-tools --update-path=auto {{ cloudkitty_venv_bin | dirname }}
-  when:
-    - not cloudkitty_developer_mode | bool
-    - cloudkitty_venv_enabled | bool
-    - cloudkitty_get_venv | success
-  tags:
-    - cloudkitty-install
-    - cloudkitty-pip-packages
-
-- name: Install pip packages (venv)
+- name: Install pip packages
   pip:
     name: "{{ item }}"
     state: latest
-    virtualenv: "{{ cloudkitty_venv_bin | dirname }}"
+    virtualenv: "{{ cloudkitty_bin | dirname }}"
     virtualenv_site_packages: "no"
     extra_args: "{{ pip_install_options_fact }}"
   register: install_packages
@@ -188,7 +168,6 @@
   delay: 2
   with_items: cloudkitty_pip_packages
   when:
-    - cloudkitty_venv_enabled | bool
     - cloudkitty_get_venv | failed or cloudkitty_developer_mode | bool
   notify:
     - Restart cloudkitty services
@@ -196,21 +175,12 @@
     - cloudkitty-install
     - cloudkitty-pip-packages
 
-- name: Install pip packages (no venv)
-  pip:
-    name: "{{ item }}"
-    state: latest
-    extra_args: "{{ pip_install_options_fact }}"
-  register: install_packages
-  until: install_packages|success
-  retries: 5
-  delay: 2
-  with_items: cloudkitty_pip_packages
+- name: Update virtualenv path
+  command: >
+    virtualenv-tools --update-path=auto {{ cloudkitty_bin | dirname }}
   when:
     - not cloudkitty_developer_mode | bool
-    - not cloudkitty_venv_enabled | bool
-  notify:
-    - Restart cloudkitty services
+    - cloudkitty_get_venv | success
   tags:
     - cloudkitty-install
     - cloudkitty-pip-packages
