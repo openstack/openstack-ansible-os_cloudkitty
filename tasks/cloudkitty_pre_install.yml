@@ -48,17 +48,6 @@
   tags:
     - cloudkitty-dirs
 
-- name: Create cloudkitty venv dir
-  file:
-    path: "{{ item.path }}"
-    state: directory
-  with_items:
-    - { path: "/openstack/venvs" }
-    - { path: "{{ cloudkitty_venv_bin | dirname }}" }
-  when: cloudkitty_venv_enabled | bool
-  tags:
-    - cloudkitty-dirs
-
 - name: Test for log directory or link
   shell: |
     if [ -h "/var/log/cloudkitty"  ]; then

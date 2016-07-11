@@ -41,19 +41,3 @@
     - Restart cloudkitty services
   tags:
     - cloudkitty-config
-
-- name: Get cloudkitty command path
-  command: which cloudkitty
-  register: cloudkitty_command_path
-  when:
-    - not cloudkitty_venv_enabled | bool
-  tags:
-    - cloudkitty-command-bin
-
-- name: Set cloudkitty command path
-  set_fact:
-    cloudkitty_bin: "{{ cloudkitty_command_path.stdout | dirname }}"
-  when:
-    - not cloudkitty_venv_enabled | bool
-  tags:
-    - cloudkitty-command-bin

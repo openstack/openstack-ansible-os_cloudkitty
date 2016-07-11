@@ -23,9 +23,7 @@ chown {{ system_user }}:{{ system_group }} "/var/run/{{ program_name }}"
 mkdir -p "/var/lock/{{ program_name }}"
 chown {{ system_user }}:{{ system_group }} "/var/lock/{{ program_name }}"
 
-{% if cloudkitty_venv_enabled | bool -%}
-    . {{ cloudkitty_venv_bin }}/activate
-{%- endif %}
+    . {{ cloudkitty_bin }}/activate
 
 end script
 
