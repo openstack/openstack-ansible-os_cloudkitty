@@ -54,7 +54,7 @@ cloudkitty_user_domain_name: Default
 cloudkitty_keystone_auth_plugin: password
 cloudkitty_keystone_trustee_auth_plugin: v2password
 cloudkitty_output_backend: cloudkitty.backend.file.FileBackend
-cloudkitty_output_pipline: osrf
+cloudkitty_output_pipeline: osrf
 cloudkitty_output_basepath: /var/cloudkitty/reports
 cloudkitty_signing_dir: /var/cache/cloudkitty
 
@@ -69,7 +69,7 @@ cloudkitty_service_proto: http
 cloudkitty_service_publicuri_proto: "{{ openstack_service_publicuri_proto | default(cloudkitty_service_proto) }}"
 cloudkitty_service_adminuri_proto: "{{ openstack_service_adminuri_proto | default(cloudkitty_service_proto) }}"
 cloudkitty_service_internaluri_proto: "{{ openstack_service_internaluri_proto | default(cloudkitty_service_proto) }}"
-cloudkitty_service_type: orchestration
+cloudkitty_service_type: rating
 cloudkitty_service_publicuri: "{{ cloudkitty_service_publicuri_proto }}://{{ external_lb_vip_address }}:{{ cloudkitty_service_port }}"
 cloudkitty_service_publicurl: "{{ cloudkitty_service_publicuri }}/"
 cloudkitty_service_adminuri: "{{ cloudkitty_service_adminuri_proto }}://{{ internal_lb_vip_address }}:{{ cloudkitty_service_port }}"
@@ -89,21 +89,10 @@ cloudkitty_service_names:
 
 cloudkitty_pip_packages:
   - cloudkitty
-  - tooz
   - msgpack-python
-  - keystonemiddleware
   - PyMySQL
   - python-memcached
   - pycrypto
-  - python-ceilometerclient
-  - python-cinderclient
-  - python-glanceclient
-  - python-keystoneclient
-  - python-neutronclient
-  - python-novaclient
-  - python-openstackclient
-  - python-swiftclient
-  - python-troveclient
 
 cloudkitty_requires_pip_packages:
   - virtualenv
