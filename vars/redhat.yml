@@ -1,5 +1,5 @@
 ---
-# Copyright 2014, Rackspace US, Inc.
+# Copyright 2016, Walmart Stores, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,28 +13,5 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-galaxy_info:
-  author: rcbops
-  description: Installation and setup of cloudkitty
-  company: Rackspace
-  license: Apache2
-  min_ansible_version: 1.9
-  platforms:
-    - name: Ubuntu
-      versions:
-        - trusty
-        - xenial
-    - name: EL
-      versions:
-        - 7
-  categories:
-    - cloud
-    - python
-    - cloudkitty
-    - development
-    - openstack
-dependencies:
-  - pip_install
-  - apt_package_pinning
-  - galera_client
-  - openstack_openrc
+cloudkitty_packages:
+  - git

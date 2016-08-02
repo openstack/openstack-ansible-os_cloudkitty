@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-- include: cloudkitty_upstart_common_init.yml
+- include: cloudkitty_init_common.yml
   vars:
     program_name: "{{ cloudkitty_service_program_name }}"
     service_name: "{{ cloudkitty_service_name }}"
@@ -22,7 +22,8 @@
     service_home: "{{ cloudkitty_system_home_folder }}"
   when: >
     inventory_hostname in groups['cloudkitty_api']
-- include: cloudkitty_upstart_common_init.yml
+
+- include: cloudkitty_init_common.yml
   vars:
     program_name: "{{ cloudkitty_service_processor_program_name }}"
     service_name: "{{ cloudkitty_service_name }}"
@@ -31,4 +32,3 @@
     service_home: "{{ cloudkitty_system_home_folder }}"
   when: >
     inventory_hostname in groups['cloudkitty_api']
-
