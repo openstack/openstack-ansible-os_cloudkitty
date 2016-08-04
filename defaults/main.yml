@@ -104,6 +104,12 @@ cloudkitty_requires_pip_packages:
   - python-keystoneclient
   - httplib2
 
+# This variable is used by the repo_build process to determine
+# which host group to check for members of before building the
+# pip packages required by this role. The value is picked up
+# by the py_pkgs lookup.
+cloudkitty_role_project_group: cloudkitty_all
+
 # The messaging driver to use, defaults to rabbit. Other drivers
 # include qpid and zmq. (string value)
 cloudkitty_rpc_backend: rabbit
