@@ -1,6 +1,8 @@
 # {{ ansible_managed }}
 
 [DEFAULT]
+# Disable stderr logging
+use_stderr = False
 debug = {{ debug }}
 notification_topics = {{ cloudkitty_notification_topics }}
 rpc_backend = {{ cloudkitty_rpc_backend }}
