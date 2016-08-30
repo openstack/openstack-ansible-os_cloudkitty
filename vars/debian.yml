@@ -16,5 +16,5 @@
 ## APT Cache options
 cache_timeout: 600
 
-cloudkitty_packages:
+cloudkitty_distro_packages:
   - git
