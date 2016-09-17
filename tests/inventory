@@ -1,2 +1,43 @@
 [all]
-localhost ansible_connection=local ansible_become=True
+localhost ansible_become=True
+service1 ansible_host=10.100.100.2 ansible_become=True ansible_user=root
+openstack1 ansible_host=10.100.100.3 ansible_become=True ansible_user=root
+
+[all_containers]
+service1
+openstack1
+
+[rabbitmq_all]
+service1
+
+[galera_all]
+service1
+
+[memcached_all]
+service1
+
+[service_all:children]
+rabbitmq_all
+galera_all
+memcached_all
+
+[keystone_all]
+openstack1
+
+[cloudkitty_api]
+openstack1
+
+[cloudkitty_engine]
+openstack1
+
+[cloudkitty_engine_container]
+openstack1
+
+[cloudkitty_apis_container]
+openstack1
+
+[cloudkitty_all:children]
+cloudkitty_api
+cloudkitty_apis_container
+cloudkitty_engine
+cloudkitty_engine_container
