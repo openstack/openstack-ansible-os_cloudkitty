@@ -16,14 +16,14 @@
 # limitations under the License.
 
 - include: cloudkitty_install_apt.yml
-  when:
-    - ansible_pkg_mgr == 'apt'
+  static: no
+  when: ansible_pkg_mgr == 'apt'
   tags:
     - cloudkitty-install
 
 - include: cloudkitty_install_yum.yml
-  when:
-    - ansible_pkg_mgr == 'yum'
+  static: no
+  when: ansible_pkg_mgr == 'yum'
   tags:
     - cloudkitty-install
 
