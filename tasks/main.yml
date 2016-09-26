@@ -43,11 +43,9 @@
 - include: cloudkitty_post_install.yml
 
 - include: cloudkitty_domain_setup.yml
-  static: no
   when: inventory_hostname == groups['cloudkitty_all'][0]
 
 - include: cloudkitty_db_setup.yml
-  static: no
   when: inventory_hostname == groups['cloudkitty_all'][0]
 
 - include: cloudkitty_init.yml
