@@ -14,12 +14,12 @@
 # limitations under the License.
 
 # Setup the host
-- include: playbooks/test-setup-host.yml
+- include: common/test-setup-host.yml
 
 # Install RabbitMQ/MariaDB
-- include: playbooks/test-install-infra.yml
+- include: common/test-install-infra.yml
 
 # Install Keystone
-- include: playbooks/test-install-keystone.yml
+- include: common/test-install-keystone.yml
 
 - include: test-install-cloudkitty.yml
