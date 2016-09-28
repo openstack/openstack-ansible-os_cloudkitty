@@ -48,7 +48,7 @@
 - include: cloudkitty_db_setup.yml
   when: inventory_hostname == groups['cloudkitty_all'][0]
 
-- include: cloudkitty_init.yml
+- include: cloudkitty_init_common.yml
 
 - name: Flush handlers
   meta: flush_handlers

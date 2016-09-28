@@ -31,7 +31,7 @@
     shell: "{{ cloudkitty_system_shell }}"
     system: "yes"
     createhome: "yes"
-    home: "/var/lib/{{ cloudkitty_system_user_name }}"
+    home: "{{ cloudkitty_system_home_folder }}"
   tags:
     - cloudkitty-user
 

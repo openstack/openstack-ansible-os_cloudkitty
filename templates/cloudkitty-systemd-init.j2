@@ -7,13 +7,13 @@ After=network.target
 
 [Service]
 Type=simple
-User={{ system_user }}
-Group={{ system_group }}
+User={{ cloudkitty_system_user_name }}
+Group={{ cloudkitty_system_group_name }}
 
 {% if program_override is defined %}
-ExecStart={{ program_override }} {{ program_config_options|default('') }} --log-file=/var/log/cloudkitty/{{ program_name }}.log
+ExecStart={{ program_override }} {{ program_config_options|default('') }} --log-file=/var/log/cloudkitty/{{ item.value.service_name }}.log
 {% else %}
-ExecStart={{ cloudkitty_bin }}/{{ program_name }} {{ program_config_options|default('') }} --log-file=/var/log/cloudkitty/{{ program_name }}.log
+ExecStart={{ cloudkitty_bin }}/{{ item.value.service_name }} {{ program_config_options|default('') }} --log-file=/var/log/cloudkitty/{{ item.value.service_name }}.log
 {% endif %}
 
 # Give a reasonable amount of time for the server to start up/shut down

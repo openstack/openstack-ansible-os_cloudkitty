@@ -80,16 +80,19 @@ cloudkitty_service_adminuri: "{{ cloudkitty_service_adminuri_proto }}://{{ inter
 cloudkitty_service_adminurl: "{{ cloudkitty_service_adminuri }}/"
 cloudkitty_service_internaluri: "{{ cloudkitty_service_internaluri_proto }}://{{ internal_lb_vip_address }}:{{ cloudkitty_service_port }}"
 cloudkitty_service_internalurl: "{{ cloudkitty_service_internaluri }}/"
-cloudkitty_service_program_name: cloudkitty-api
-cloudkitty_service_processor_program_name: cloudkitty-processor
 
 cloudkitty_cloudkitty_conf_overrides: {}
 cloudkitty_policy_overrides: {}
 cloudkitty_api_paste_ini_overrides: {}
 
-cloudkitty_service_names:
-  - cloudkitty-api
-  - cloudkitty-processor
+## Service Name-Group Mapping
+cloudkitty_services:
+  cloudkitty-api:
+    group: cloudkitty_api
+    service_name: cloudkitty-api
+  cloudkitty-processor:
+    group: cloudkitty_api
+    service_name: cloudkitty-processor
 
 cloudkitty_pip_packages:
   - cloudkitty
