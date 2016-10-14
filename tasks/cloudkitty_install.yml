@@ -116,7 +116,7 @@
     url: "{{ cloudkitty_venv_download_url }}"
     dest: "/var/cache/{{ cloudkitty_venv_download_url | basename }}"
     force: yes
-  ignore_errors: true
+  failed_when: false
   register: get_venv
   when:
     - not cloudkitty_developer_mode | bool
