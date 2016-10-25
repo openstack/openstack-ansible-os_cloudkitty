@@ -33,7 +33,7 @@
         port: "22"
         delay: "{{ ssh_delay }}"
         search_regex: "OpenSSH"
-        host: "{{ ansible_ssh_host }}"
+        host: "{{ ansible_host }}"
       delegate_to: "{{ physical_host }}"
       when: container_config is defined and container_config | changed
       register: ssh_wait_check
