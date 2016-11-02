@@ -36,11 +36,9 @@ cloudkitty_bin: "/openstack/venvs/cloudkitty-{{ cloudkitty_venv_tag }}/bin"
 
 cloudkitty_venv_download_url: http://127.0.0.1/venvs/untagged/ubuntu/cloudkitty.tgz
 
-cloudkitty_git_repo: https://github.com/openstack/cloudkitty.git
+cloudkitty_git_repo: https://git.openstack.org/openstack/cloudkitty
 cloudkitty_git_install_branch: master
 
-cloudkitty_requirements_git_repo: https://git.openstack.org/openstack/requirements
-cloudkitty_requirements_git_install_branch: master
 cloudkitty_developer_constraints:
   - "git+{{ cloudkitty_git_repo }}@{{ cloudkitty_requirements_git_install_branch }}#egg=cloudkitty"
 
