@@ -54,51 +54,13 @@
     - cloudkitty-install
     - cloudkitty-pip-packages
 
-- name: Get local venv checksum
-  stat:
-    path: "/var/cache/{{ cloudkitty_venv_download_url | basename }}"
-    get_md5: False
-  when:
-    - not cloudkitty_developer_mode | bool
-  register: local_venv_stat
-  tags:
-    - cloudkitty-install
-    - cloudkitty-pip-packages
-
-- name: Get remote venv checksum
-  uri:
-    url: "{{ cloudkitty_venv_download_url | replace('tgz', 'checksum') }}"
-    return_content: True
-  when:
-    - not cloudkitty_developer_mode | bool
-  register: remote_venv_checksum
-  tags:
-    - cloudkitty-install
-    - cloudkitty-pip-packages
-
-# TODO: When project moves to ansible 2 we can pass this a sha256sum which will:
-#       a) allow us to remove force: yes
-#       b) allow the module to calculate the checksum of dest file which would
-#          result in file being downloaded only if provided and dest sha256sum
-#          checksums differ
 - name: Attempt venv download
   get_url:
     url: "{{ cloudkitty_venv_download_url }}"
     dest: "/var/cache/{{ cloudkitty_venv_download_url | basename }}"
-    force: yes
-  failed_when: false
-  register: get_venv
-  when:
-    - not cloudkitty_developer_mode | bool
-    - (local_venv_stat.stat.exists == False or
-        {{ local_venv_stat.stat.checksum is defined and local_venv_stat.stat.checksum != remote_venv_checksum.content | trim }})
-  tags:
-    - cloudkitty-install
-    - cloudkitty-pip-packages
-
-- name: Set cloudkitty get_venv fact
-  set_fact:
-    cloudkitty_get_venv: "{{ get_venv }}"
+    checksum: "sha1:{{ lookup('url', cloudkitty_venv_download_url | replace('tgz', 'checksum')) }}"
+  register: cloudkitty_get_venv
+  when: not cloudkitty_developer_mode | bool
   tags:
     - cloudkitty-install
     - cloudkitty-pip-packages
@@ -107,8 +69,7 @@
   file:
     path: "{{ cloudkitty_bin | dirname }}"
     state: absent
-  when:
-    - cloudkitty_get_venv | changed
+  when: cloudkitty_get_venv | changed
   tags:
     - cloudkitty-install
     - cloudkitty-pip-packages
@@ -150,8 +111,7 @@
   until: install_packages|success
   retries: 5
   delay: 2
-  when:
-    - cloudkitty_get_venv | failed or cloudkitty_developer_mode | bool
+  when: cloudkitty_developer_mode | bool
   notify:
     - Restart cloudkitty services
   tags:
@@ -163,7 +123,7 @@
     virtualenv-tools --update-path=auto {{ cloudkitty_bin | dirname }}
   when:
     - not cloudkitty_developer_mode | bool
-    - cloudkitty_get_venv | success
+    - cloudkitty_get_venv | changed or cloudkitty_venv_dir | changed
   tags:
     - cloudkitty-install
     - cloudkitty-pip-packages
