@@ -45,6 +45,7 @@
   command: "{{ cloudkitty_bin }}/cloudkitty-dbsync upgrade"
   become: yes
   become_user: "{{ cloudkitty_system_user_name }}"
+  changed_when: false
   tags:
     - cloudkitty-db-sync
     - cloudkitty-setup
@@ -54,6 +55,7 @@
   command: "{{ cloudkitty_bin }}/cloudkitty-storage-init"
   become: yes
   become_user: "{{ cloudkitty_system_user_name }}"
+  changed_when: false
   tags:
     - cloudkitty-db-sync
     - cloudkitty-setup
