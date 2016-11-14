@@ -25,6 +25,9 @@ cloudkitty_username: cloudkitty
 
 cloudkitty_rabbitmq_userid: cloudkitty
 cloudkitty_rabbitmq_vhost: /cloudkitty
+cloudkitty_rabbitmq_port: 5672
+cloudkitty_rabbitmq_servers: 127.0.0.1
+cloudkitty_rabbitmq_use_ssl: False
 
 cloudkitty_system_group_name: cloudkitty
 cloudkitty_system_user_name: cloudkitty
