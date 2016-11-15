@@ -14,9 +14,9 @@ Required Variables
 
 .. code-block:: yaml
 
-    cloudkitty_user_password
+    cloudkitty_service_password
     cloudkitty_rabbitmq_password
-    cloudkitty_galera_password
+    cloudkitty_container_mysql_password
     cloudkitty_galera_address
 
 Example Playbook
