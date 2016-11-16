@@ -120,7 +120,7 @@
 
 - name: Update virtualenv path
   command: >
-    virtualenv-tools --update-path=auto {{ cloudkitty_bin | dirname }}
+    virtualenv-tools --update-path=auto --reinitialize {{ cloudkitty_bin | dirname }}
   when:
     - not cloudkitty_developer_mode | bool
     - cloudkitty_get_venv | changed or cloudkitty_venv_dir | changed
