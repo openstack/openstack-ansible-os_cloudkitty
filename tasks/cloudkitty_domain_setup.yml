@@ -37,9 +37,9 @@
     login_user: "{{ keystone_admin_user_name }}"
     login_password: "{{ keystone_auth_admin_password }}"
     login_project_name: "{{ keystone_admin_tenant_name }}"
-    user_name: "{{ cloudkitty_username }}"
+    user_name: "{{ cloudkitty_service_user_name }}"
     domain_name: "{{ cloudkitty_user_domain_name }}"
-    password: "{{ cloudkitty_user_password }}"
+    password: "{{ cloudkitty_service_password }}"
     insecure: "{{ keystone_service_adminuri_insecure }}"
   tags:
     - cloudkitty-domain
@@ -50,7 +50,7 @@
 - name: Add cloudkitty user to service admin role
   keystone:
     command: "ensure_user_role"
-    user_name: "{{ cloudkitty_username }}"
+    user_name: "{{ cloudkitty_service_user_name }}"
     project_name: "service"
     role_name: "admin"
     login_user: "{{ keystone_admin_user_name }}"

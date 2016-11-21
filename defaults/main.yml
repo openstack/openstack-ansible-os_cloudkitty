@@ -21,7 +21,7 @@ debug: False
 cloudkitty_package_state: "latest"
 cloudkitty_pip_package_state: "latest"
 
-cloudkitty_username: cloudkitty
+cloudkitty_service_user_name: cloudkitty
 
 cloudkitty_rabbitmq_userid: cloudkitty
 cloudkitty_rabbitmq_vhost: /cloudkitty
@@ -118,4 +118,4 @@ cloudkitty_role_project_group: cloudkitty_all
 # The messaging driver to use, defaults to rabbit. Other drivers
 # include qpid and zmq. (string value)
 cloudkitty_rpc_backend: rabbit
-cloudkitty_database_connection: "mysql+pymysql://{{ cloudkitty_galera_user }}:{{ cloudkitty_galera_password }}@{{ cloudkitty_galera_address }}/{{ cloudkitty_galera_database }}?charset=utf8"
+cloudkitty_database_connection: "mysql+pymysql://{{ cloudkitty_galera_user }}:{{ cloudkitty_container_mysql_password }}@{{ cloudkitty_galera_address }}/{{ cloudkitty_galera_database }}?charset=utf8"
