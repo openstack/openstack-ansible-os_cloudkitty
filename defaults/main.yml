@@ -50,15 +50,12 @@ cloudkitty_developer_mode: false
 cloudkitty_notification_topics: notifications
 cloudkitty_services: compute
 cloudkitty_collector: ceilometer
-cloudkitty_project_name: admin
-cloudkitty_project_domain_name: Default
 cloudkitty_service_project_domain_id: default
 cloudkitty_service_project_name: "service"
 cloudkitty_service_user_domain_id: default
 
 cloudkitty_user_domain_name: Default
 cloudkitty_keystone_auth_plugin: password
-cloudkitty_keystone_trustee_auth_plugin: v2password
 cloudkitty_output_backend: cloudkitty.backend.file.FileBackend
 cloudkitty_output_pipeline: osrf
 cloudkitty_output_basepath: /var/cloudkitty/reports
@@ -75,7 +72,6 @@ cloudkitty_service_proto: http
 cloudkitty_service_publicuri_proto: "{{ openstack_service_publicuri_proto | default(cloudkitty_service_proto) }}"
 cloudkitty_service_adminuri_proto: "{{ openstack_service_adminuri_proto | default(cloudkitty_service_proto) }}"
 cloudkitty_service_internaluri_proto: "{{ openstack_service_internaluri_proto | default(cloudkitty_service_proto) }}"
-cloudkitty_service_type: rating
 cloudkitty_service_publicuri: "{{ cloudkitty_service_publicuri_proto }}://{{ external_lb_vip_address }}:{{ cloudkitty_service_port }}"
 cloudkitty_service_publicurl: "{{ cloudkitty_service_publicuri }}/"
 cloudkitty_service_adminuri: "{{ cloudkitty_service_adminuri_proto }}://{{ internal_lb_vip_address }}:{{ cloudkitty_service_port }}"
