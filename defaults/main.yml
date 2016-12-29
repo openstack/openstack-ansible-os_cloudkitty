@@ -59,7 +59,6 @@ cloudkitty_keystone_auth_plugin: password
 cloudkitty_output_backend: cloudkitty.backend.file.FileBackend
 cloudkitty_output_pipeline: osrf
 cloudkitty_output_basepath: /var/cloudkitty/reports
-cloudkitty_signing_dir: /var/cache/cloudkitty
 
 cloudkitty_galera_database: cloudkitty
 cloudkitty_galera_user: cloudkitty
