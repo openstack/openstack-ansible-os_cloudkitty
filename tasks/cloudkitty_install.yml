@@ -60,7 +60,7 @@
     dest: "/var/cache/{{ cloudkitty_venv_download_url | basename }}"
     checksum: "sha1:{{ lookup('url', cloudkitty_venv_download_url | replace('tgz', 'checksum')) }}"
   register: cloudkitty_get_venv
-  when: not cloudkitty_developer_mode | bool
+  when: cloudkitty_venv_download | bool
   tags:
     - cloudkitty-install
     - cloudkitty-pip-packages
@@ -79,6 +79,7 @@
     path: "{{ cloudkitty_bin | dirname }}"
     state: directory
   register: cloudkitty_venv_dir
+  when: cloudkitty_get_venv | changed
   tags:
     - cloudkitty-install
     - cloudkitty-pip-packages
@@ -88,9 +89,7 @@
     src: "/var/cache/{{ cloudkitty_venv_download_url | basename }}"
     dest: "{{ cloudkitty_bin | dirname }}"
     copy: "no"
-  when:
-    - not cloudkitty_developer_mode | bool
-    - cloudkitty_get_venv | changed or cloudkitty_venv_dir | changed
+  when: cloudkitty_get_venv | changed
   notify:
     - Restart cloudkitty services
   tags:
@@ -111,7 +110,7 @@
   until: install_packages|success
   retries: 5
   delay: 2
-  when: cloudkitty_developer_mode | bool
+  when: cloudkitty_get_venv | failed or cloudkitty_get_venv | skipped
   notify:
     - Restart cloudkitty services
   tags:
@@ -121,9 +120,7 @@
 - name: Update virtualenv path
   command: >
     virtualenv-tools --update-path=auto --reinitialize {{ cloudkitty_bin | dirname }}
-  when:
-    - not cloudkitty_developer_mode | bool
-    - cloudkitty_get_venv | changed or cloudkitty_venv_dir | changed
+  when: cloudkitty_get_venv | changed
   tags:
     - cloudkitty-install
     - cloudkitty-pip-packages

@@ -38,6 +38,9 @@ cloudkitty_system_home_folder: "/var/lib/{{ cloudkitty_system_user_name }}"
 cloudkitty_venv_tag: untagged
 cloudkitty_bin: "/openstack/venvs/cloudkitty-{{ cloudkitty_venv_tag }}/bin"
 
+# venv_download, even when true, will use the fallback method of building the
+# venv from scratch if the venv download fails.
+cloudkitty_venv_download: "{{ not cloudkitty_developer_mode | bool }}"
 cloudkitty_venv_download_url: http://127.0.0.1/venvs/untagged/ubuntu/cloudkitty.tgz
 
 cloudkitty_git_repo: https://git.openstack.org/openstack/cloudkitty
