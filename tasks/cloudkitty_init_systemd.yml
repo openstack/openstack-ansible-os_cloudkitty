@@ -53,4 +53,4 @@
   with_dict: "{{ cloudkitty_services }}"
   when: inventory_hostname in groups[item.value.group]
   notify:
-    - Reload systemd daemon
+    - Restart cloudkitty services

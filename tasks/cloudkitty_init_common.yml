@@ -13,16 +13,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-- include: cloudkitty_init_upstart.yml
-  when: pid1_name == "init"
-
 - include: cloudkitty_init_systemd.yml
   when: pid1_name == "systemd"
 
 - name: Load service
-  service:
+  systemd:
    name: "{{ item.value.service_name }}"
    enabled: "yes"
+   daemon_reload: yes
   with_dict: "{{ cloudkitty_services }}"
   when: inventory_hostname in groups[item.value.group]
   notify:

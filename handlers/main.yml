@@ -13,20 +13,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-- name: Reload systemd daemon
-  command: "systemctl daemon-reload"
-  notify:
-    - Restart cloudkitty services
-
-- name: Reload upstart init scripts
-  command: initctl reload-configuration
-  notify:
-    - Restart cloudkitty services
-
 - name: Restart cloudkitty services
-  service:
+  systemd:
     name: "{{ item.value.service_name }}"
     state: "restarted"
-    pattern: "{{ item.value.service_name }}"
+    daemon_reload: yes
   with_dict: "{{ cloudkitty_services }}"
   when: inventory_hostname in groups[item.value.group]
