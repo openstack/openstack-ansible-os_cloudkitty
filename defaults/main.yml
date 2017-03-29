@@ -85,14 +85,19 @@ cloudkitty_cloudkitty_conf_overrides: {}
 cloudkitty_policy_overrides: {}
 cloudkitty_api_paste_ini_overrides: {}
 
+cloudkitty_api_init_overrides: {}
+cloudkitty_processor_init_overrides: {}
+
 ## Service Name-Group Mapping
 cloudkitty_services:
   cloudkitty-api:
     group: cloudkitty_api
     service_name: cloudkitty-api
+    init_config_overrides: "{{ cloudkitty_api_init_overrides }}"
   cloudkitty-processor:
     group: cloudkitty_api
     service_name: cloudkitty-processor
+    init_config_overrides: "{{ cloudkitty_processor_init_overrides }}"
 
 cloudkitty_pip_packages:
   - cloudkitty
