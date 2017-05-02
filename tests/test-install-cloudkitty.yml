@@ -16,6 +16,7 @@
 - name: Playbook for role testing
   hosts: cloudkitty_all
   user: root
+  become: true
   gather_facts: true
   pre_tasks:
     - name: Ensure Rabbitmq vhost
@@ -37,4 +38,3 @@
     - role: "os_cloudkitty"
   vars_files:
     - common/test-vars.yml
-    - test-vars.yml
