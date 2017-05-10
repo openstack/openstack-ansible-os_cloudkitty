@@ -53,11 +53,21 @@
     - cloudkitty-install
     - cloudkitty-pip-packages
 
+- name: Retrieve checksum for venv download
+  uri:
+    url: "{{ cloudkitty_venv_download_url | replace('tgz', 'checksum') }}"
+    return_content: yes
+  register: cloudkitty_venv_checksum
+  when: cloudkitty_venv_download | bool
+  tags:
+    - cloudkitty-install
+    - cloudkitty-pip-packages
+
 - name: Attempt venv download
   get_url:
     url: "{{ cloudkitty_venv_download_url }}"
     dest: "/var/cache/{{ cloudkitty_venv_download_url | basename }}"
-    checksum: "sha1:{{ lookup('url', cloudkitty_venv_download_url | replace('tgz', 'checksum')) }}"
+    checksum: "sha1:{{ cloudkitty_venv_checksum.content | trim }}"
   register: cloudkitty_get_venv
   when: cloudkitty_venv_download | bool
   tags:
