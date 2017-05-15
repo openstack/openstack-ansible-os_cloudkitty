@@ -49,7 +49,7 @@
 - include: cloudkitty_db_setup.yml
   when: inventory_hostname == groups['cloudkitty_all'][0]
 
-- include: cloudkitty_init_common.yml
+- include: "cloudkitty_init_{{ ansible_service_mgr }}.yml"
 
 - name: Flush handlers
   meta: flush_handlers
