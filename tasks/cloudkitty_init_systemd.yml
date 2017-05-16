@@ -42,6 +42,8 @@
     group: "root"
   with_dict: "{{ cloudkitty_services }}"
   when: inventory_hostname in groups[item.value.group]
+  notify:
+    - Restart cloudkitty services
 
 - name: Place the systemd init script
   config_template:
