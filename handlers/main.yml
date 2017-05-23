@@ -47,6 +47,9 @@
   copy:
     src: "/etc/cloudkitty/policy.json-{{ cloudkitty_venv_tag }}"
     dest: "/etc/cloudkitty/policy.json"
+    owner: "root"
+    group: "{{ cloudkitty_system_group_name }}"
+    mode: "0640"
     remote_src: yes
 
 - name: Start services
