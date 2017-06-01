@@ -120,5 +120,4 @@ cloudkitty_role_project_group: cloudkitty_all
 
 # The messaging driver to use, defaults to rabbit. Other drivers
 # include qpid and zmq. (string value)
-cloudkitty_rpc_backend: rabbit
 cloudkitty_database_connection: "mysql+pymysql://{{ cloudkitty_galera_user }}:{{ cloudkitty_container_mysql_password }}@{{ cloudkitty_galera_address }}/{{ cloudkitty_galera_database }}?charset=utf8"
