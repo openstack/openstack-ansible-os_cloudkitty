@@ -101,10 +101,10 @@ cloudkitty_services:
 
 cloudkitty_pip_packages:
   - cloudkitty
+  - cryptography
   - msgpack-python
   - PyMySQL
   - python-memcached
-  - pycrypto
 
 cloudkitty_requires_pip_packages:
   - virtualenv
