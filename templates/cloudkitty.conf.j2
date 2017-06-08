@@ -5,7 +5,9 @@
 use_stderr = False
 debug = {{ debug }}
 notification_topics = {{ cloudkitty_notification_topics }}
-rpc_backend = {{ cloudkitty_rpc_backend }}
+
+## RabbitMQ RPC
+transport_url = rabbit://{% for host in cloudkitty_rabbitmq_servers.split(',') %}{{ cloudkitty_rabbitmq_userid }}:{{ cloudkitty_rabbitmq_password }}@{{ host }}:{{ cloudkitty_rabbitmq_port }}{% if not loop.last %},{% else %}/{{ cloudkitty_rabbitmq_vhost }}{% endif %}{% endfor %}
 
 [api]
 port = {{ cloudkitty_service_port }}
@@ -45,12 +47,7 @@ auth_section = keystone_authtoken
 [oslo_messaging_qpid]
 
 [oslo_messaging_rabbit]
-rabbit_userid = {{ cloudkitty_rabbitmq_userid }}
-rabbit_password = {{ cloudkitty_rabbitmq_password }}
-rabbit_hosts = {{ cloudkitty_rabbitmq_servers }}
-rabbit_virtual_host = {{ cloudkitty_rabbitmq_vhost }}
 ssl = {{ cloudkitty_rabbitmq_use_ssl }}
-rabbit_port = {{ cloudkitty_rabbitmq_port }}
 
 [output]
 pipeline = {{ cloudkitty_output_pipeline }}
