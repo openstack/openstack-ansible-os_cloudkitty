@@ -108,7 +108,6 @@ cloudkitty_pip_packages:
 
 cloudkitty_requires_pip_packages:
   - virtualenv
-  - virtualenv-tools
   - python-keystoneclient
   - httplib2
 
