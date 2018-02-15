@@ -15,8 +15,6 @@
 
 cloudkitty_venv_tag: "testing"
 cloudkitty_developer_mode: true
-cloudkitty_git_install_branch: master
-cloudkitty_requirements_git_install_branch: master
 cloudkitty_galera_address: "{{ hostvars[groups['galera_all'][0]]['ansible_host'] }}"
 cloudkitty_container_mysql_password: "SuperSecrete"
 cloudkitty_service_password: "secrete"
