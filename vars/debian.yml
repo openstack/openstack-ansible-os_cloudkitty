@@ -21,7 +21,7 @@ cloudkitty_distro_packages:
   - python-systemd
   - python3-systemd
 
-cloudkitty_developer_mode_distro_packages:
+cloudkitty_devel_distro_packages:
   - build-essential
   - git-core
   - libsystemd-dev

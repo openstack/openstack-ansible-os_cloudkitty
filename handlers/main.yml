@@ -22,7 +22,9 @@
   until: _stop is success
   retries: 5
   delay: 2
-  listen: Restart cloudkitty services
+  listen:
+    - "Restart cloudkitty services"
+    - "venv changed"
 
 # Note (odyssey4me):
 # The policy.json file is currently read continually by the services
@@ -40,7 +42,9 @@
     group: "{{ cloudkitty_system_group_name }}"
     mode: "0640"
     remote_src: yes
-  listen: Restart cloudkitty services
+  listen:
+    - "Restart cloudkitty services"
+    - "venv changed"
 
 - name: Start services
   systemd:
@@ -51,4 +55,6 @@
   until: _start is success
   retries: 5
   delay: 2
-  listen: Restart cloudkitty services
+  listen:
+    - "Restart cloudkitty services"
+    - "venv changed"

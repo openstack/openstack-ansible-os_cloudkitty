@@ -15,29 +15,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-- name: Install distro packages
-  package:
-    pkg: "{{ cloudkitty_distro_packages }}"
-    state: "{{ cloudkitty_package_state }}"
-    update_cache: "{{ (ansible_pkg_mgr == 'apt') | ternary('yes', omit) }}"
-    cache_valid_time: "{{ (ansible_pkg_mgr == 'apt') | ternary(cache_timeout, omit) }}"
-  register: install_packages
-  until: install_packages is success
-  retries: 5
-  delay: 2
-
-- name: Install developer mode distro packages
-  package:
-    pkg: "{{ cloudkitty_developer_mode_distro_packages }}"
-    state: "{{ cloudkitty_package_state }}"
-    update_cache: "{{ (ansible_pkg_mgr == 'apt') | ternary('yes', omit) }}"
-    cache_valid_time: "{{ (ansible_pkg_mgr == 'apt') | ternary(cache_timeout, omit) }}"
-  when: cloudkitty_developer_mode | bool
-  register: install_packages
-  until: install_packages is success
-  retries: 5
-  delay: 2
-
+# TODO(odyssey4me):
+# This can be simplified once all the roles are using
+# python_venv_build. We can then switch to using a
+# set of constraints in pip.conf inside the venv,
+# perhaps prepared by giving a giving a list of
+# constraints to the role.
 - name: Create developer mode constraint file
   copy:
     dest: "/opt/developer-pip-constraints.txt"
@@ -46,118 +29,24 @@
       {{ item }}
       {% endfor %}
   when: cloudkitty_developer_mode | bool
-  tags:
-    - cloudkitty-install
-    - cloudkitty-pip-packages
 
-- name: Retrieve checksum for venv download
-  uri:
-    url: "{{ cloudkitty_venv_download_url | replace('tgz', 'checksum') }}"
-    return_content: yes
-  register: cloudkitty_venv_checksum
-  when: cloudkitty_venv_download | bool
-  tags:
-    - cloudkitty-install
-    - cloudkitty-pip-packages
+- name: Ensure remote wheel building is disabled in developer mode
+  set_fact:
+    venv_build_host: "{{ ansible_hostname }}"
+  when:
+    - cloudkitty_developer_mode | bool
 
-- name: Attempt venv download
-  get_url:
-    url: "{{ cloudkitty_venv_download_url }}"
-    dest: "/var/cache/{{ cloudkitty_venv_download_url | basename }}"
-    checksum: "sha1:{{ cloudkitty_venv_checksum.content | trim }}"
-  register: cloudkitty_get_venv
-  when: cloudkitty_venv_download | bool
-  tags:
-    - cloudkitty-install
-    - cloudkitty-pip-packages
-
-- name: Remove existing venv
-  file:
-    path: "{{ cloudkitty_bin | dirname }}"
-    state: absent
-  when: cloudkitty_get_venv  is changed
-  tags:
-    - cloudkitty-install
-    - cloudkitty-pip-packages
-
-- name: Create cloudkitty venv dir
-  file:
-    path: "{{ cloudkitty_bin | dirname }}"
-    state: directory
-  register: cloudkitty_venv_dir
-  when: cloudkitty_get_venv  is changed
-  tags:
-    - cloudkitty-install
-    - cloudkitty-pip-packages
-
-- name: Unarchive pre-built venv
-  unarchive:
-    src: "/var/cache/{{ cloudkitty_venv_download_url | basename }}"
-    dest: "{{ cloudkitty_bin | dirname }}"
-    copy: "no"
-  when: cloudkitty_get_venv  is changed
-  notify:
-    - Restart cloudkitty services
-  tags:
-    - cloudkitty-install
-    - cloudkitty-pip-packages
-
-- name: Install pip packages
-  pip:
-    name: "{{ cloudkitty_pip_packages }}"
-    state: "{{ cloudkitty_pip_package_state }}"
-    virtualenv: "{{ cloudkitty_bin | dirname }}"
-    virtualenv_site_packages: "no"
-    extra_args: >-
-      {{ cloudkitty_developer_mode | ternary(pip_install_developer_constraints | default('--constraint /opt/developer-pip-constraints.txt'), '') }}
-      {{ (pip_install_upper_constraints is defined) | ternary('--constraint ' + pip_install_upper_constraints | default(''),'') }}
-      {{ pip_install_options | default('') }}
-  register: install_packages
-  until: install_packages is success
-  retries: 5
-  delay: 2
-  when: cloudkitty_get_venv | failed or cloudkitty_get_venv | skipped
-  notify:
-    - Restart cloudkitty services
-  tags:
-    - cloudkitty-install
-    - cloudkitty-pip-packages
-
-# NOTE(odyssey4me):
-# We reinitialize the venv to ensure that the right
-# version of python is in the venv, but we do not
-# want virtualenv to also replace pip, setuptools
-# and wheel so we tell it not to.
-# We do not use --always-copy for CentOS/SuSE due
-# to https://github.com/pypa/virtualenv/issues/565
-- name: Update virtualenv path
-  shell: |
-    find {{ cloudkitty_bin }} -name \*.pyc -delete
-    sed -si '1s/^.*python.*$/#!{{ cloudkitty_bin | replace ('/','\/') }}\/python/' {{ cloudkitty_bin }}/*
-    virtualenv {{ cloudkitty_bin | dirname }} \
-        {{ (ansible_pkg_mgr == 'apt') | ternary('--always-copy', '') }} \
-        --no-pip \
-        --no-setuptools \
-        --no-wheel
-  when: cloudkitty_get_venv  is changed
-  tags:
-    - skip_ansible_lint
-    - cloudkitty-install
-    - cloudkitty-pip-packages
-
-- name: Install optional pip packages
-  pip:
-    name: "{{ cloudkitty_optional_oslomsg_amqp1_pip_packages }}"
-    state: "{{ cloudkitty_pip_package_state }}"
-    virtualenv: "{{ cloudkitty_bin | dirname }}"
-    virtualenv_site_packages: "no"
-  when: cloudkitty_oslomsg_amqp1_enabled
-  register: install_optional_packages
-  until: install_optional_packages is success
-  retries: 5
-  delay: 2
-  notify:
-    - Restart cloudkitty services
-  tags:
-    - cloudkitty-install
-    - cloudkitty-pip-packages
+- name: Install the python venv
+  include_role:
+    name: "python_venv_build"
+    private: yes
+  vars:
+    venv_build_distro_package_list: "{{ cloudkitty_devel_distro_packages }}"
+    venv_install_destination_path: "{{ cloudkitty_bin | dirname }}"
+    venv_install_distro_package_list: "{{ cloudkitty_distro_packages }}"
+    venv_pip_install_args: "{{ cloudkitty_pip_install_args }}"
+    venv_pip_packages: "{{ (cloudkitty_oslomsg_amqp1_enabled | bool) | ternary(cloudkitty_pip_packages + cloudkitty_optional_oslomsg_amqp1_pip_packages, cloudkitty_pip_packages) }}"
+    venv_facts_when_changed:
+      - section: "cloudkitty"
+        option: "venv_tag"
+        value: "{{ cloudkitty_venv_tag }}"
