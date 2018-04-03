@@ -25,7 +25,7 @@ connection = {{ cloudkitty_database_connection }}
 
 [keystone_authtoken]
 memcached_servers = {{ memcached_servers }}
-auth_uri = {{ keystone_service_internaluri }}
+www_authenticate_uri = {{ keystone_service_internaluri }}
 project_domain_id = {{ cloudkitty_service_project_domain_id }}
 project_name = {{ cloudkitty_service_project_name }}
 user_domain_id = {{ cloudkitty_service_user_domain_id }}
