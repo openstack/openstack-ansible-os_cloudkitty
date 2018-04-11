@@ -33,6 +33,7 @@
         read_priv: ".*"
         write_priv: ".*"
         state: "present"
+      no_log: true
       delegate_to: "{{ hostvars[groups['rabbitmq_all'][0]]['ansible_host'] }}"
   roles:
     - role: "os_cloudkitty"
