@@ -95,6 +95,7 @@
         read_priv: ".*"
         write_priv: ".*"
         state: "present"
+      no_log: true
       delegate_to: "{{ groups['rabbitmq_all'][0] }}"
       when:
         - inventory_hostname == groups['cloudkitty_all'][0]
