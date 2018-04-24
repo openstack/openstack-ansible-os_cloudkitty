@@ -24,6 +24,7 @@
     login_project_name: "{{ keystone_admin_tenant_name }}"
     endpoint: "{{ keystone_service_adminurl }}"
     insecure: "{{ keystone_service_adminuri_insecure }}"
+  no_log: True
   tags:
     - cloudkitty-domain
     - cloudkitty-domain-role
@@ -41,6 +42,7 @@
     domain_name: "{{ cloudkitty_user_domain_name }}"
     password: "{{ cloudkitty_service_password }}"
     insecure: "{{ keystone_service_adminuri_insecure }}"
+  no_log: True
   tags:
     - cloudkitty-domain
     - cloudkitty-domain-setup
@@ -58,6 +60,7 @@
     login_project_name: "{{ keystone_admin_tenant_name }}"
     endpoint: "{{ keystone_service_adminurl }}"
     insecure: "{{ keystone_service_adminuri_insecure }}"
+  no_log: True
   tags:
     - cloudkitty-domain
     - cloudkitty-domain-setup
@@ -74,6 +77,7 @@
     login_project_name: "{{ keystone_admin_tenant_name }}"
     endpoint: "{{ keystone_service_adminurl }}"
     insecure: "{{ keystone_service_adminuri_insecure }}"
+  no_log: True
   tags:
     - cloudkitty-domain
     - cloudkitty-domain-setup
@@ -98,6 +102,7 @@
     login_project_name: "{{ keystone_admin_tenant_name }}"
     endpoint: "{{ keystone_service_adminurl }}"
     insecure: "{{ keystone_service_adminuri_insecure }}"
+  no_log: True
   tags:
     - cloudkitty-domain
     - cloudkitty-domain-setup
