@@ -16,15 +16,11 @@
     check:
       jobs:
         - openstack-ansible-linters
-        # TODO(odyssey4me):
-        # Making this voting once the role is functional again.
-        - openstack-ansible-functional-ubuntu-xenial-nv
+        - openstack-ansible-functional-ubuntu-xenial
     experimental:
       jobs:
         - openstack-ansible-integrated-deploy-aio
     gate:
       jobs:
         - openstack-ansible-linters
-        # TODO(odyssey4me):
-        # Uncomment this once the role is functional again.
-        #- openstack-ansible-functional-ubuntu-xenial
+        - openstack-ansible-functional-ubuntu-xenial
