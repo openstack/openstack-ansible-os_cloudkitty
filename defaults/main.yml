@@ -105,6 +105,7 @@ cloudkitty_pip_packages:
   - msgpack-python
   - PyMySQL
   - python-memcached
+  - SQLAlchemy>=1.0.10
 
 cloudkitty_requires_pip_packages:
   - virtualenv
