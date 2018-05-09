@@ -146,6 +146,5 @@
   when: cloudkitty_get_venv | changed
   tags:
     - skip_ansible_lint
-  tags:
     - cloudkitty-install
     - cloudkitty-pip-packages
