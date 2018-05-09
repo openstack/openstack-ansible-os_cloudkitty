@@ -51,7 +51,7 @@ cloudkitty_developer_constraints:
 
 cloudkitty_developer_mode: false
 cloudkitty_notification_topics: notifications
-cloudkitty_services: compute
+cloudkitty_collected_services: compute
 cloudkitty_collector: ceilometer
 cloudkitty_service_project_domain_id: default
 cloudkitty_service_project_name: "service"

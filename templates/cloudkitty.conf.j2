@@ -13,7 +13,7 @@ transport_url = rabbit://{% for host in cloudkitty_rabbitmq_servers.split(',') %
 port = {{ cloudkitty_service_port }}
 
 [collect]
-services = {{ cloudkitty_services }}
+services = {{ cloudkitty_collected_services }}
 collector = {{ cloudkitty_collector }}
 
 [cors]
