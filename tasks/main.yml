@@ -43,6 +43,8 @@
 - include_tasks: cloudkitty_install.yml
 - include_tasks: cloudkitty_post_install.yml
 
+- include_tasks: cloudkitty_wsgi.yml
+
 - include_tasks: cloudkitty_service_setup.yml
   when: inventory_hostname == groups['cloudkitty_all'][0]
 

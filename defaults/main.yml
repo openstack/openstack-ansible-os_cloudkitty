@@ -89,11 +89,13 @@ cloudkitty_collector: gnocchi
 cloudkitty_service_project_domain_id: default
 cloudkitty_service_project_name: "service"
 cloudkitty_service_user_domain_id: default
+cloudkitty_system_service_name: "cloudkitty-api"
 
 cloudkitty_keystone_auth_plugin: password
 cloudkitty_output_backend: cloudkitty.backend.file.FileBackend
 cloudkitty_output_pipeline: osrf
 cloudkitty_output_basepath: /var/cloudkitty/reports
+cloudkitty_log_dir: /var/log/cloudkitty
 
 cloudkitty_db_setup_host: "{{ ('galera_all' in groups) | ternary(groups['galera_all'][0], 'localhost') }}"
 cloudkitty_galera_address: "{{ galera_address | default('127.0.0.1') }}"
@@ -101,6 +103,11 @@ cloudkitty_galera_database: cloudkitty
 cloudkitty_galera_user: cloudkitty
 cloudkitty_database_connection: >-
   mysql+pymysql://{{ cloudkitty_galera_user }}:{{ cloudkitty_container_mysql_password }}@{{ cloudkitty_galera_address }}/{{ cloudkitty_galera_database }}?charset=utf8
+
+cloudkitty_wsgi_threads: 1
+cloudkitty_wsgi_processes_max: 16
+cloudkitty_wsgi_processes: "{{ [[ansible_processor_vcpus|default(1), 1] | max * 2, cloudkitty_wsgi_processes_max] | min }}"
+cloudkitty_uwsgi_bind_address: 0.0.0.0
 
 ## Service Type and Data
 cloudkitty_service_region: RegionOne
@@ -123,6 +130,7 @@ cloudkitty_api_paste_ini_overrides: {}
 
 cloudkitty_api_init_overrides: {}
 cloudkitty_processor_init_overrides: {}
+cloudkitty_api_uwsgi_overrides: {}
 
 ## Service Name-Group Mapping
 cloudkitty_services:
@@ -130,7 +138,8 @@ cloudkitty_services:
     group: cloudkitty_all
     service_name: cloudkitty-api
     init_config_overrides: "{{ cloudkitty_api_init_overrides }}"
-    execstarts: "{{ cloudkitty_bin }}/cloudkitty-api"
+    execstarts: "{{ cloudkitty_bin }}/uwsgi --ini /etc/uwsgi/cloudkitty-api.ini"
+    execreloads: "{{ cloudkitty_bin }}/uwsgi --reload /var/run/cloudkitty-api/cloudkitty-api.pid"
     start_order: 1
   cloudkitty-processor:
     group: cloudkitty_all
@@ -149,6 +158,7 @@ cloudkitty_pip_packages:
   - SQLAlchemy>=1.0.10
   - systemd-python
   - tooz
+  - uwsgi
 
 ## (Qdrouterd) integration
 # TODO(ansmith): Change structure when more backends will be supported
