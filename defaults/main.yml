@@ -63,8 +63,12 @@ cloudkitty_output_backend: cloudkitty.backend.file.FileBackend
 cloudkitty_output_pipeline: osrf
 cloudkitty_output_basepath: /var/cloudkitty/reports
 
+cloudkitty_db_setup_host: "{{ ('galera_all' in groups) | ternary(groups['galera_all'][0], 'localhost') }}"
+cloudkitty_galera_address: "{{ galera_address | default('127.0.0.1') }}"
 cloudkitty_galera_database: cloudkitty
 cloudkitty_galera_user: cloudkitty
+cloudkitty_database_connection: >-
+  mysql+pymysql://{{ cloudkitty_galera_user }}:{{ cloudkitty_container_mysql_password }}@{{ cloudkitty_galera_address }}/{{ cloudkitty_galera_database }}?charset=utf8
 
 ## Service Type and Data
 cloudkitty_service_region: RegionOne
@@ -117,7 +121,3 @@ cloudkitty_requires_pip_packages:
 # pip packages required by this role. The value is picked up
 # by the py_pkgs lookup.
 cloudkitty_role_project_group: cloudkitty_all
-
-# The messaging driver to use, defaults to rabbit. Other drivers
-# include qpid and zmq. (string value)
-cloudkitty_database_connection: "mysql+pymysql://{{ cloudkitty_galera_user }}:{{ cloudkitty_container_mysql_password }}@{{ cloudkitty_galera_address }}/{{ cloudkitty_galera_database }}?charset=utf8"
