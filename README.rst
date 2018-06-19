@@ -45,3 +45,12 @@ Example Playbook
         cloudkitty_container_mysql_password: "SuperSecretePassword1"
         cloudkitty_service_password: "SuperSecretePassword2"
         cloudkitty_rabbitmq_password: "SuperSecretePassword3"
+
+Documentation for the project can be found at:
+  https://docs.openstack.org/openstack-ansible-os_cloudkitty/latest/
+
+Release notes for the project can be found at:
+  https://docs.openstack.org/releasenotes/openstack-ansible-os_cloudkitty/
+
+The project home is at:
+  https://launchpad.net/openstack-ansible
