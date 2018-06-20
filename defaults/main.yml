@@ -106,6 +106,7 @@ cloudkitty_pip_packages:
   - PyMySQL
   - python-memcached
   - SQLAlchemy>=1.0.10
+  - tooz
 
 cloudkitty_requires_pip_packages:
   - virtualenv
