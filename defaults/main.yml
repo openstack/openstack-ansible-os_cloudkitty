@@ -103,6 +103,7 @@ cloudkitty_pip_packages:
   - cloudkitty
   - cryptography
   - msgpack-python
+  - osprofiler
   - PyMySQL
   - python-memcached
   - SQLAlchemy>=1.0.10
