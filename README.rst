@@ -33,7 +33,7 @@ Example Playbook
 
 .. code-block:: yaml
 
-    - name: Install cloudkitty server
+    - name: Install cloudkitty service
       hosts: cloudkitty_all
       user: root
       roles:
