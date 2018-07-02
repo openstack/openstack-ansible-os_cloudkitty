@@ -128,5 +128,9 @@
     cloudkitty_rabbitmq_servers: "{{ rabbitmq_servers }}"
     cloudkitty_rabbitmq_port: "{{ rabbitmq_port }}"
     cloudkitty_rabbitmq_use_ssl: "{{ rabbitmq_use_ssl }}"
+    galera_root_user: root
+  vars_prompt:
+    - name: "galera_root_password"
+      prompt: "What is galera_root_password?"
   vars_files:
     - defaults/repo_packages/openstack_services.yml

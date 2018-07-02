@@ -22,7 +22,7 @@
     login_host: "{{ cloudkitty_galera_address }}"
     name: "{{ cloudkitty_galera_database }}"
     state: "present"
-  delegate_to: "{{ groups['galera_all'][0] }}"
+  delegate_to: "{{ cloudkitty_db_setup_host }}"
   no_log: true
   tags:
     - cloudkitty-db-setup
@@ -37,7 +37,7 @@
     host: "{{ item }}"
     state: "present"
     priv: "{{ cloudkitty_galera_database }}.*:ALL"
-  delegate_to: "{{ groups['galera_all'][0] }}"
+  delegate_to: "{{ cloudkitty_db_setup_host }}"
   no_log: true
   with_items:
     - "localhost"
