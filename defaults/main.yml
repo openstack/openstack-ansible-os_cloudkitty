@@ -16,6 +16,11 @@
 ## Verbosity Options
 debug: False
 
+# Set the host which will execute the shade modules
+# for the service setup. The host must already have
+# clouds.yaml properly configured.
+cloudkitty_service_setup_host: "{{ openstack_service_setup_host | default('localhost') }}"
+
 # Set the package install state for distribution and pip packages
 # Options are 'present' and 'latest'
 cloudkitty_package_state: "latest"
@@ -57,7 +62,6 @@ cloudkitty_service_project_domain_id: default
 cloudkitty_service_project_name: "service"
 cloudkitty_service_user_domain_id: default
 
-cloudkitty_user_domain_name: Default
 cloudkitty_keystone_auth_plugin: password
 cloudkitty_output_backend: cloudkitty.backend.file.FileBackend
 cloudkitty_output_pipeline: osrf
@@ -112,11 +116,6 @@ cloudkitty_pip_packages:
   - python-memcached
   - SQLAlchemy>=1.0.10
   - tooz
-
-cloudkitty_requires_pip_packages:
-  - virtualenv
-  - python-keystoneclient
-  - httplib2
 
 # This variable is used by the repo_build process to determine
 # which host group to check for members of before building the
