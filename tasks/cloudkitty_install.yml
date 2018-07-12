@@ -22,7 +22,7 @@
     update_cache: "{{ (ansible_pkg_mgr == 'apt') | ternary('yes', omit) }}"
     cache_valid_time: "{{ (ansible_pkg_mgr == 'apt') | ternary(cache_timeout, omit) }}"
   register: install_packages
-  until: install_packages|success
+  until: install_packages is success
   retries: 5
   delay: 2
 
@@ -63,7 +63,7 @@
   file:
     path: "{{ cloudkitty_bin | dirname }}"
     state: absent
-  when: cloudkitty_get_venv | changed
+  when: cloudkitty_get_venv  is changed
   tags:
     - cloudkitty-install
     - cloudkitty-pip-packages
@@ -73,7 +73,7 @@
     path: "{{ cloudkitty_bin | dirname }}"
     state: directory
   register: cloudkitty_venv_dir
-  when: cloudkitty_get_venv | changed
+  when: cloudkitty_get_venv  is changed
   tags:
     - cloudkitty-install
     - cloudkitty-pip-packages
@@ -83,7 +83,7 @@
     src: "/var/cache/{{ cloudkitty_venv_download_url | basename }}"
     dest: "{{ cloudkitty_bin | dirname }}"
     copy: "no"
-  when: cloudkitty_get_venv | changed
+  when: cloudkitty_get_venv  is changed
   notify:
     - Restart cloudkitty services
   tags:
@@ -101,7 +101,7 @@
       {{ (pip_install_upper_constraints is defined) | ternary('--constraint ' + pip_install_upper_constraints | default(''),'') }}
       {{ pip_install_options | default('') }}
   register: install_packages
-  until: install_packages|success
+  until: install_packages is success
   retries: 5
   delay: 2
   when: cloudkitty_get_venv | failed or cloudkitty_get_venv | skipped
@@ -127,7 +127,7 @@
         --no-pip \
         --no-setuptools \
         --no-wheel
-  when: cloudkitty_get_venv | changed
+  when: cloudkitty_get_venv  is changed
   tags:
     - skip_ansible_lint
     - cloudkitty-install

@@ -35,9 +35,9 @@
         search_regex: "OpenSSH"
         host: "{{ ansible_host }}"
       delegate_to: "{{ physical_host }}"
-      when: container_config is defined and container_config | changed
+      when: container_config is defined and container_config  is changed
       register: ssh_wait_check
-      until: ssh_wait_check | success
+      until: ssh_wait_check  is success
       retries: 3
       tags:
         - ssh-wait
