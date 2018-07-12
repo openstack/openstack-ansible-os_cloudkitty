@@ -22,7 +22,7 @@
   with_dict: "{{ cloudkitty_services }}"
   when: inventory_hostname in groups[item.value.group]
   register: _stop
-  until: _stop  is success
+  until: _stop is success
   retries: 5
   delay: 2
   listen: Restart cloudkitty services
@@ -54,7 +54,7 @@
   with_dict: "{{ cloudkitty_services }}"
   when: inventory_hostname in groups[item.value.group]
   register: _start
-  until: _start  is success
+  until: _start is success
   retries: 5
   delay: 2
   listen: Restart cloudkitty services
