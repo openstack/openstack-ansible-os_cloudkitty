@@ -23,11 +23,12 @@ Required Variables
 
 .. code-block:: yaml
 
-    cloudkitty_service_password
-    cloudkitty_oslomsg_rpc_password
-    cloudkitty_oslomsg_notify_password
-    cloudkitty_container_mysql_password
-    cloudkitty_galera_address
+   external_lb_vip_address: 172.16.24.1
+   internal_lb_vip_address: 192.168.0.1
+   cloudkitty_galera_address: "{{ internal_lb_vip_address }}"
+   cloudkitty_container_mysql_password: "SuperSecretePassword1"
+   cloudkitty_service_password: "SuperSecretePassword2"
+   cloudkitty_rabbitmq_password: "SuperSecretePassword3"
 
 Example Playbook
 ================
