@@ -6,8 +6,8 @@ use_stderr = False
 debug = {{ debug }}
 notification_topics = {{ cloudkitty_notification_topics }}
 
-## RabbitMQ RPC
-transport_url = rabbit://{% for host in cloudkitty_rabbitmq_servers.split(',') %}{{ cloudkitty_rabbitmq_userid }}:{{ cloudkitty_rabbitmq_password }}@{{ host }}:{{ cloudkitty_rabbitmq_port }}{% if not loop.last %},{% else %}/{{ cloudkitty_rabbitmq_vhost }}{% endif %}{% endfor %}
+## Oslo Messaging RPC
+transport_url = {{ cloudkitty_oslomsg_rpc_transport }}://{% for host in cloudkitty_oslomsg_rpc_servers.split(',') %}{{ cloudkitty_oslomsg_rpc_userid }}:{{ cloudkitty_oslomsg_rpc_password }}@{{ host }}:{{ cloudkitty_oslomsg_rpc_port }}{% if not loop.last %},{% else %}/{{ cloudkitty_oslomsg_rpc_vhost }}{% if (cloudkitty_oslomsg_rpc_use_ssl | lower) | bool %}?ssl=1{% else %}?ssl=0{% endif %}{% endif %}{% endfor %}
 
 [api]
 port = {{ cloudkitty_service_port }}
@@ -47,7 +47,10 @@ auth_section = keystone_authtoken
 [oslo_messaging_qpid]
 
 [oslo_messaging_rabbit]
-ssl = {{ cloudkitty_rabbitmq_use_ssl }}
+ssl = {{ cloudkitty_oslomsg_notify_use_ssl | bool }}
+
+[oslo_messaging_notifications]
+transport_url = {{ cloudkitty_oslomsg_notify_transport }}://{% for host in cloudkitty_oslomsg_notify_servers.split(',') %}{{ cloudkitty_oslomsg_notify_userid }}:{{ cloudkitty_oslomsg_notify_password }}@{{ host }}:{{ cloudkitty_oslomsg_notify_port }}{% if not loop.last %},{% else %}/{{ cloudkitty_oslomsg_notify_vhost }}{% if (cloudkitty_oslomsg_notify_use_ssl | lower) | bool %}?ssl=1{% else %}?ssl=0{% endif %}{% endif %}{% endfor %}
 
 [output]
 pipeline = {{ cloudkitty_output_pipeline }}

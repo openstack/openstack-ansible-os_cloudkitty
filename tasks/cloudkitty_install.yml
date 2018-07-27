@@ -132,3 +132,20 @@
     - skip_ansible_lint
     - cloudkitty-install
     - cloudkitty-pip-packages
+
+- name: Install optional pip packages
+  pip:
+    name: "{{ cloudkitty_optional_oslomsg_amqp1_pip_packages }}"
+    state: "{{ cloudkitty_pip_package_state }}"
+    virtualenv: "{{ cloudkitty_bin | dirname }}"
+    virtualenv_site_packages: "no"
+  when: cloudkitty_oslomsg_amqp1_enabled
+  register: install_optional_packages
+  until: install_optional_packages is success
+  retries: 5
+  delay: 2
+  notify:
+    - Restart cloudkitty services
+  tags:
+    - cloudkitty-install
+    - cloudkitty-pip-packages
