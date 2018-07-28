@@ -31,18 +31,22 @@ cloudkitty_service_user_name: cloudkitty
 ## Oslo Messaging info
 
 # RPC
-cloudkitty_oslomsg_rpc_transport: rabbit
-cloudkitty_oslomsg_rpc_servers: 127.0.0.1
-cloudkitty_oslomsg_rpc_port: 5672
-cloudkitty_oslomsg_rpc_use_ssl: False
+cloudkitty_oslomsg_rpc_host_group: "{{ oslomsg_rpc_host_group | default('rabbitmq_all') }}"
+cloudkitty_oslomsg_rpc_setup_host: "{{ (cloudkitty_oslomsg_rpc_host_group in groups) | ternary(groups[cloudkitty_oslomsg_rpc_host_group][0], 'localhost') }}"
+cloudkitty_oslomsg_rpc_transport: "{{ oslomsg_rpc_transport | default('rabbit') }}"
+cloudkitty_oslomsg_rpc_servers: "{{ oslomsg_rpc_servers | default('127.0.0.1') }}"
+cloudkitty_oslomsg_rpc_port: "{{ oslomsg_rpc_port | default('5672') }}"
+cloudkitty_oslomsg_rpc_use_ssl: "{{ oslomsg_rpc_use_ssl | default(False) }}"
 cloudkitty_oslomsg_rpc_userid: cloudkitty
 cloudkitty_oslomsg_rpc_vhost: /cloudkitty
 
 # Notify
-cloudkitty_oslomsg_notify_transport: rabbit
-cloudkitty_oslomsg_notify_servers: 127.0.0.1
-cloudkitty_oslomsg_notify_port: 5672
-cloudkitty_oslomsg_notify_use_ssl: False
+cloudkitty_oslomsg_notify_host_group: "{{ oslomsg_notify_host_group | default('rabbitmq_all') }}"
+cloudkitty_oslomsg_notify_setup_host: "{{ (cloudkitty_oslomsg_notify_host_group in groups) | ternary(groups[cloudkitty_oslomsg_notify_host_group][0], 'localhost') }}"
+cloudkitty_oslomsg_notify_transport: "{{ oslomsg_notify_transport | default('rabbit') }}"
+cloudkitty_oslomsg_notify_servers: "{{ oslomsg_notify_servers | default('127.0.0.1') }}"
+cloudkitty_oslomsg_notify_port: "{{ oslomsg_notify_port | default('5672') }}"
+cloudkitty_oslomsg_notify_use_ssl: "{{ oslomsg_notify_use_ssl | default(False) }}"
 cloudkitty_oslomsg_notify_userid: "{{ cloudkitty_oslomsg_rpc_userid }}"
 cloudkitty_oslomsg_notify_password: "{{ cloudkitty_oslomsg_rpc_password }}"
 cloudkitty_oslomsg_notify_vhost: "{{ cloudkitty_oslomsg_rpc_vhost }}"

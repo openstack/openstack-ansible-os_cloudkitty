@@ -46,8 +46,27 @@
 - include: cloudkitty_service_setup.yml
   when: inventory_hostname == groups['cloudkitty_all'][0]
 
+- include_tasks: mq_setup.yml
+  when:
+    - inventory_hostname == groups['cloudkitty_all'][0]
+  with_items:
+    - oslomsg_setup_host: "{{ cloudkitty_oslomsg_rpc_setup_host }}"
+      oslomsg_userid: "{{ cloudkitty_oslomsg_rpc_userid }}"
+      oslomsg_password: "{{ cloudkitty_oslomsg_rpc_password }}"
+      oslomsg_vhost: "{{ cloudkitty_oslomsg_rpc_vhost }}"
+      oslomsg_transport: "{{ cloudkitty_oslomsg_rpc_transport }}"
+    - oslomsg_setup_host: "{{ cloudkitty_oslomsg_notify_setup_host }}"
+      oslomsg_userid: "{{ cloudkitty_oslomsg_notify_userid }}"
+      oslomsg_password: "{{ cloudkitty_oslomsg_notify_password }}"
+      oslomsg_vhost: "{{ cloudkitty_oslomsg_notify_vhost }}"
+      oslomsg_transport: "{{ cloudkitty_oslomsg_notify_transport }}"
+  no_log: true
+  tags:
+    - cloudkitty-config
+
 - include: cloudkitty_db_setup.yml
-  when: inventory_hostname == groups['cloudkitty_all'][0]
+  when:
+    - inventory_hostname == groups['cloudkitty_all'][0]
 
 - include: "cloudkitty_init_{{ ansible_service_mgr }}.yml"
 
