@@ -13,11 +13,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cloudkitty_venv_tag: "testing"
 cloudkitty_developer_mode: true
-cloudkitty_git_install_branch: master
-cloudkitty_requirements_git_install_branch: master
-cloudkitty_galera_address: "{{ hostvars[groups['galera_all'][0]]['ansible_host'] }}"
+cloudkitty_galera_address: "{{ test_galera_host }}"
 cloudkitty_container_mysql_password: "SuperSecrete"
 cloudkitty_service_password: "secrete"
 cloudkitty_oslomsg_rpc_password: "secrete"

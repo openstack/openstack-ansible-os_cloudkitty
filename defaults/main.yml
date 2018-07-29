@@ -69,7 +69,7 @@ cloudkitty_git_repo: https://git.openstack.org/openstack/cloudkitty
 cloudkitty_git_install_branch: master
 
 cloudkitty_developer_constraints:
-  - "git+{{ cloudkitty_git_repo }}@{{ cloudkitty_requirements_git_install_branch }}#egg=cloudkitty"
+  - "git+{{ cloudkitty_git_repo }}@{{ cloudkitty_git_install_branch }}#egg=cloudkitty"
 
 cloudkitty_developer_mode: false
 cloudkitty_notification_topics: notifications
