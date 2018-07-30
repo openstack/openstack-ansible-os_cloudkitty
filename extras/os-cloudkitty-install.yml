@@ -29,8 +29,8 @@
     - include: common-tasks/os-log-dir-setup.yml
       vars:
         log_dirs:
-          - src: "/openstack/log/{{ inventory_hostname }}-barbican"
-            dest: "/var/log/barbican"
+          - src: "/openstack/log/{{ inventory_hostname }}-cloudkitty"
+            dest: "/var/log/cloudkitty"
 
   roles:
     - role: "os_cloudkitty"

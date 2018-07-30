@@ -18,3 +18,10 @@ cache_timeout: 600
 
 cloudkitty_distro_packages:
   - git
+  - python-systemd
+  - python3-systemd
+
+cloudkitty_developer_mode_distro_packages:
+  - build-essential
+  - git-core
+  - libsystemd-dev

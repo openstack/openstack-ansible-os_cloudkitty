@@ -15,3 +15,7 @@
 
 cloudkitty_distro_packages:
   - git
+  - systemd-python
+
+cloudkitty_developer_mode_distro_packages:
+  - systemd-devel

@@ -48,35 +48,6 @@
   tags:
     - cloudkitty-dirs
 
-- name: Test for log directory or link
-  shell: |
-    if [ -h "/var/log/cloudkitty"  ]; then
-      chown -h {{ cloudkitty_system_user_name }}:{{ cloudkitty_system_group_name }} "/var/log/cloudkitty"
-      chown -R {{ cloudkitty_system_user_name }}:{{ cloudkitty_system_group_name }} "$(readlink /var/log/cloudkitty)"
-    else
-      exit 1
-    fi
-  register: log_dir
-  failed_when: false
-  changed_when: log_dir.rc != 0
-  tags:
-    - cloudkitty-dirs
-    - cloudkitty-logs
-
-- name: Create cloudkitty log dir
-  file:
-    path: "{{ item.path }}"
-    state: directory
-    owner: "{{ item.owner|default(cloudkitty_system_user_name) }}"
-    group: "{{ item.group|default(cloudkitty_system_group_name) }}"
-    mode: "{{ item.mode|default('0755') }}"
-  with_items:
-    - { path: "/var/log/cloudkitty" }
-  when: log_dir.rc != 0
-  tags:
-    - cloudkitty-dirs
-    - cloudkitty-logs
-
 - name: Create cloudkitty report dir
   file:
     path: "{{ cloudkitty_output_basepath }}"

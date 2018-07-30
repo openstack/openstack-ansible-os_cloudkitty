@@ -116,13 +116,17 @@ cloudkitty_processor_init_overrides: {}
 ## Service Name-Group Mapping
 cloudkitty_services:
   cloudkitty-api:
-    group: cloudkitty_api
+    group: cloudkitty_all
     service_name: cloudkitty-api
     init_config_overrides: "{{ cloudkitty_api_init_overrides }}"
+    execstarts: "{{ cloudkitty_bin }}/cloudkitty-api"
+    start_order: 1
   cloudkitty-processor:
-    group: cloudkitty_api
+    group: cloudkitty_all
     service_name: cloudkitty-processor
     init_config_overrides: "{{ cloudkitty_processor_init_overrides }}"
+    execstarts: "{{ cloudkitty_bin }}/cloudkitty-processor"
+    start_order: 2
 
 cloudkitty_pip_packages:
   - cloudkitty
@@ -132,6 +136,7 @@ cloudkitty_pip_packages:
   - PyMySQL
   - python-memcached
   - SQLAlchemy>=1.0.10
+  - systemd-python
   - tooz
 
 ## (Qdrouterd) integration
