@@ -1,3 +1,4 @@
+---
 - name: Enable the cloudkitty-dashboard Horizon panel
   file:
     src: "{{ item.src }}"
