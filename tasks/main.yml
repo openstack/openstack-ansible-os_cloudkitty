@@ -39,11 +39,11 @@
   tags:
     - always
 
-- include: cloudkitty_pre_install.yml
-- include: cloudkitty_install.yml
-- include: cloudkitty_post_install.yml
+- include_tasks: cloudkitty_pre_install.yml
+- include_tasks: cloudkitty_install.yml
+- include_tasks: cloudkitty_post_install.yml
 
-- include: cloudkitty_service_setup.yml
+- include_tasks: cloudkitty_service_setup.yml
   when: inventory_hostname == groups['cloudkitty_all'][0]
 
 - import_tasks: mq_setup.yml
