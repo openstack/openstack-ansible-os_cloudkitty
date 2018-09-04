@@ -66,7 +66,7 @@ cloudkitty_venv_download: "{{ not cloudkitty_developer_mode | bool }}"
 cloudkitty_venv_download_url: http://127.0.0.1/venvs/untagged/ubuntu/cloudkitty.tgz
 
 cloudkitty_git_repo: https://git.openstack.org/openstack/cloudkitty
-cloudkitty_git_install_branch: master
+cloudkitty_git_install_branch: 'stable/rocky'
 
 cloudkitty_developer_constraints:
   - "git+{{ cloudkitty_git_repo }}@{{ cloudkitty_git_install_branch }}#egg=cloudkitty"
