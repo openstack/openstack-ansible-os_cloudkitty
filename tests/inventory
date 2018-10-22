@@ -1,7 +1,7 @@
 [all]
 localhost
-service1 ansible_host=10.100.100.2 ansible_become=True ansible_user=root
-openstack1 ansible_host=10.100.100.3 ansible_become=True ansible_user=root
+service1 ansible_host=10.100.100.2 ansible_become=True ansible_user=root container_name=service1
+openstack1 ansible_host=10.100.100.3 ansible_become=True ansible_user=root container_name=openstack1
 
 [all_containers]
 service1
