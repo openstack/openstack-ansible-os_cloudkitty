@@ -20,8 +20,10 @@ cloudkitty_distro_packages:
   - git
   - python-systemd
   - python3-systemd
+  - libxml2
 
 cloudkitty_devel_distro_packages:
   - build-essential
   - git-core
   - libsystemd-dev
+  - libxml2-dev
