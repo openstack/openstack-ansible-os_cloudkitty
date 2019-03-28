@@ -58,32 +58,19 @@ cloudkitty_system_comment: meow
 cloudkitty_system_shell: /bin/false
 cloudkitty_system_home_folder: "/var/lib/{{ cloudkitty_system_user_name }}"
 
-# TODO(odyssey4me):
-# This can be simplified once all the roles are using
-# python_venv_build. We can then switch to using a
-# set of constraints in pip.conf inside the venv,
-# perhaps prepared by giving a giving a list of
-# constraints to the role.
-cloudkitty_pip_install_args: >-
-  {{ cloudkitty_developer_mode | ternary(pip_install_developer_constraints | default('--constraint /opt/developer-pip-constraints.txt'), '') }}
-  {{ (pip_install_upper_constraints is defined) | ternary('--constraint ' + pip_install_upper_constraints | default(''), '') }}
-  {{ pip_install_options | default('') }}
+cloudkitty_pip_install_args: "{{ pip_install_options | default('') }}"
 
 cloudkitty_venv_tag: "{{ venv_tag | default('untagged') }}"
 cloudkitty_bin: "/openstack/venvs/cloudkitty-{{ cloudkitty_venv_tag }}/bin"
 
-# venv_download, even when true, will use the fallback method of building the
-# venv from scratch if the venv download fails.
-cloudkitty_venv_download: "{{ not cloudkitty_developer_mode | bool }}"
-cloudkitty_venv_download_url: http://127.0.0.1/venvs/untagged/ubuntu/cloudkitty.tgz
-
 cloudkitty_git_repo: https://git.openstack.org/openstack/cloudkitty
 cloudkitty_git_install_branch: master
 
-cloudkitty_developer_constraints:
+cloudkitty_upper_constraints_url: "{{ requirements_git_url | default('https://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt?h=' ~ requirements_git_install_branch | default('master')) }}"
+cloudkitty_git_constraints:
   - "git+{{ cloudkitty_git_repo }}@{{ cloudkitty_git_install_branch }}#egg=cloudkitty"
+  - "--constraint {{ cloudkitty_upper_constraints_url }}"
 
-cloudkitty_developer_mode: false
 cloudkitty_notification_topics: notifications
 cloudkitty_collected_services: compute
 cloudkitty_collector: gnocchi

@@ -13,7 +13,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cloudkitty_developer_mode: true
 cloudkitty_galera_address: "{{ test_galera_host }}"
 cloudkitty_container_mysql_password: "SuperSecrete"
 cloudkitty_service_password: "secrete"

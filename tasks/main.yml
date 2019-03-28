@@ -39,14 +39,39 @@
   tags:
     - always
 
-- include_tasks: cloudkitty_pre_install.yml
-- include_tasks: cloudkitty_install.yml
-- include_tasks: cloudkitty_post_install.yml
+- import_tasks: cloudkitty_pre_install.yml
+  tags:
+    - cloudkitty-install
 
-- include_tasks: cloudkitty_wsgi.yml
+- name: Install the python venv
+  import_role:
+    name: "python_venv_build"
+  vars:
+    venv_build_constraints: "{{ cloudkitty_git_constraints }}"
+    venv_build_distro_package_list: "{{ cloudkitty_devel_distro_packages }}"
+    venv_install_destination_path: "{{ cloudkitty_bin | dirname }}"
+    venv_install_distro_package_list: "{{ cloudkitty_distro_packages }}"
+    venv_pip_install_args: "{{ cloudkitty_pip_install_args }}"
+    venv_pip_packages: "{{ cloudkitty_pip_packages | union((cloudkitty_oslomsg_amqp1_enabled | bool) | ternary(cloudkitty_optional_oslomsg_amqp1_pip_packages, [])) }}"
+    venv_facts_when_changed:
+      - section: "cloudkitty"
+        option: "venv_tag"
+        value: "{{ cloudkitty_venv_tag }}"
+  tags:
+    - cloudkitty-install
 
-- include_tasks: cloudkitty_service_setup.yml
+- import_tasks: cloudkitty_post_install.yml
+  tags:
+    - cloudkitty-config
+
+- import_tasks: cloudkitty_wsgi.yml
+  tags:
+    - cloudkitty-config
+
+- import_tasks: cloudkitty_service_setup.yml
   when: inventory_hostname == groups['cloudkitty_all'][0]
+  tags:
+    - cloudkitty-config
 
 - import_tasks: mq_setup.yml
   when:
@@ -66,9 +91,11 @@
     - common-mq
     - cloudkitty-config
 
-- include: cloudkitty_db_setup.yml
+- import_tasks: cloudkitty_db_setup.yml
   when:
     - inventory_hostname == groups['cloudkitty_all'][0]
+  tags:
+    - cloudkitty-config
 
 - name: Run the systemd service role
   include_role:
