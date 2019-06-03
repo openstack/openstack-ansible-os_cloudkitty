@@ -15,36 +15,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-- name: Create DB for service
-  mysql_db:
-    login_user: "{{ galera_root_user }}"
-    login_password: "{{ galera_root_password }}"
-    login_host: "{{ cloudkitty_galera_address }}"
-    name: "{{ cloudkitty_galera_database }}"
-    state: "present"
-  delegate_to: "{{ cloudkitty_db_setup_host }}"
-  no_log: true
-  tags:
-    - cloudkitty-db-setup
-
-- name: Grant access to the DB for the service
-  mysql_user:
-    login_user: "{{ galera_root_user }}"
-    login_password: "{{ galera_root_password }}"
-    login_host: "{{ cloudkitty_galera_address }}"
-    name: "{{ cloudkitty_galera_user }}"
-    password: "{{ cloudkitty_container_mysql_password }}"
-    host: "{{ item }}"
-    state: "present"
-    priv: "{{ cloudkitty_galera_database }}.*:ALL"
-  delegate_to: "{{ cloudkitty_db_setup_host }}"
-  no_log: true
-  with_items:
-    - "localhost"
-    - "%"
-  tags:
-    - cloudkitty-db-setup
-
 - name: Perform a cloudkitty DB sync
   command: "{{ cloudkitty_bin }}/cloudkitty-dbsync upgrade"
   become: yes
