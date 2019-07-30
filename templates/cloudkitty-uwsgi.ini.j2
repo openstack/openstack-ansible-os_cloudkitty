@@ -6,7 +6,7 @@ gid = {{ cloudkitty_system_group_name }}
 virtualenv = /openstack/venvs/cloudkitty-{{ cloudkitty_venv_tag }}
 wsgi-file = {{ cloudkitty_bin }}/cloudkitty-wsgi.py
 http = :{{ cloudkitty_service_port }}
-logto = {{ cloudkitty_log_dir }}/cloudkitty-api.log
+disable-logging = true
 
 master = true
 enable-threads = true

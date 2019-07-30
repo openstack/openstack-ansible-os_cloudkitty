@@ -83,7 +83,6 @@ cloudkitty_keystone_auth_plugin: password
 cloudkitty_output_backend: cloudkitty.backend.file.FileBackend
 cloudkitty_output_pipeline: osrf
 cloudkitty_output_basepath: /var/cloudkitty/reports
-cloudkitty_log_dir: /var/log/cloudkitty
 
 cloudkitty_db_setup_host: "{{ ('galera_all' in groups) | ternary(groups['galera_all'][0], 'localhost') }}"
 cloudkitty_galera_address: "{{ galera_address | default('127.0.0.1') }}"

@@ -26,18 +26,5 @@
       static: no
       when: not is_metal
 
-    - include: common-tasks/os-log-dir-setup.yml
-      vars:
-        log_dirs:
-          - src: "/openstack/log/{{ inventory_hostname }}-cloudkitty"
-            dest: "/var/log/cloudkitty"
-
   roles:
     - role: "os_cloudkitty"
-
-  post_tasks:
-    - include_tasks: "common-tasks/rsyslog-client.yml"
-      vars:
-        rsyslog_client_log_rotate_file: cloudkitty_log_rotate
-        rsyslog_client_log_dir: "/var/log/cloudkitty"
-        rsyslog_client_config_name: "99-cloudkitty-rsyslog-client.conf"
