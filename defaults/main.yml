@@ -114,6 +114,7 @@ cloudkitty_service_internalurl: "{{ cloudkitty_service_internaluri }}/"
 cloudkitty_cloudkitty_conf_overrides: {}
 cloudkitty_policy_overrides: {}
 cloudkitty_api_paste_ini_overrides: {}
+cloudkitty_metrics_overrides: {}
 
 cloudkitty_api_init_overrides: {}
 cloudkitty_processor_init_overrides: {}

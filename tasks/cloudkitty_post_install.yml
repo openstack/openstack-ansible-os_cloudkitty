@@ -37,6 +37,10 @@
       dest: "/etc/cloudkitty/policy.json-{{ cloudkitty_venv_tag }}"
       config_overrides: "{{ cloudkitty_policy_overrides }}"
       config_type: "json"
+    - src: "cloudkitty-metrics.yml.j2"
+      dest: "/etc/cloudkitty/metrics.yml"
+      config_overrides: "{{ cloudkitty_metrics_overrides }}"
+      config_type: "yaml"
   notify:
     - Restart cloudkitty services
   tags:
