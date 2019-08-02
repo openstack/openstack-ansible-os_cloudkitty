@@ -100,7 +100,33 @@
   tags:
     - cloudkitty-config
 
-- import_tasks: cloudkitty_service_setup.yml
+- include_tasks: service_setup.yml
+  vars:
+    _service_adminuri_insecure: "{{ keystone_service_adminuri_insecure }}"
+    _service_setup_host: "{{ cloudkitty_service_setup_host }}"
+    _service_setup_host_python_interpreter: "{{ cloudkitty_service_setup_host_python_interpreter }}"
+    _service_project_name: "{{ cloudkitty_service_project_name }}"
+    _service_region: "{{ cloudkitty_service_region }}"
+    _service_users:
+      - name: "{{ cloudkitty_service_user_name }}"
+        password: "{{ cloudkitty_service_password }}"
+        role: "rating"
+      - name: "{{ cloudkitty_service_user_name }}"
+        role: admin
+    _service_endpoints:
+      - service: "{{ cloudkitty_service_name }}"
+        interface: "public"
+        url: "{{ cloudkitty_service_publicurl }}"
+      - service: "{{ cloudkitty_service_name }}"
+        interface: "internal"
+        url: "{{ cloudkitty_service_internalurl }}"
+      - service: "{{ cloudkitty_service_name }}"
+        interface: "admin"
+        url: "{{ cloudkitty_service_adminurl }}"
+    _service_catalog:
+      - name: "{{ cloudkitty_service_name }}"
+        type: "rating"
+        description: "OpenStack Rating Service"
   when: inventory_hostname == groups['cloudkitty_all'][0]
   tags:
     - cloudkitty-config
