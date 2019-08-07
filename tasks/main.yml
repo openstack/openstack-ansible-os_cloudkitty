@@ -100,7 +100,7 @@
   tags:
     - cloudkitty-config
 
-- include_tasks: service_setup.yml
+- import_tasks: service_setup.yml
   vars:
     _service_adminuri_insecure: "{{ keystone_service_adminuri_insecure }}"
     _service_setup_host: "{{ cloudkitty_service_setup_host }}"
