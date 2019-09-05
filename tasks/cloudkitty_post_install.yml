@@ -43,5 +43,6 @@
       config_type: "yaml"
   notify:
     - Restart cloudkitty services
+    - Restart uwsgi services
   tags:
     - cloudkitty-config

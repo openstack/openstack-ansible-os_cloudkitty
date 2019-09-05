@@ -96,9 +96,16 @@
   tags:
     - cloudkitty-config
 
-- import_tasks: cloudkitty_wsgi.yml
+- name: Import uwsgi role
+  import_role:
+    name: uwsgi
+  vars:
+    uwsgi_services: "{{ uwsgi_cloudkitty_services }}"
+    uwsgi_install_method: "source"
   tags:
     - cloudkitty-config
+    - uwsgi
+
 
 - import_tasks: service_setup.yml
   vars:

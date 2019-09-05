@@ -126,9 +126,12 @@ cloudkitty_services:
     group: cloudkitty_all
     service_name: cloudkitty-api
     init_config_overrides: "{{ cloudkitty_api_init_overrides }}"
-    execstarts: "{{ cloudkitty_bin }}/uwsgi --ini /etc/uwsgi/cloudkitty-api.ini"
-    execreloads: "{{ cloudkitty_bin }}/uwsgi --reload /var/run/cloudkitty-api/cloudkitty-api.pid"
     start_order: 1
+    wsgi_app: True
+    wsgi_path: "{{ cloudkitty_bin }}/cloudkitty-api"
+    uwsgi_overrides: "{{ cloudkitty_api_uwsgi_overrides }}"
+    uwsgi_port: "{{ cloudkitty_service_port }}"
+    uwsgi_bind_address: "{{ cloudkitty_uwsgi_bind_address }}"
   cloudkitty-processor:
     group: cloudkitty_all
     service_name: cloudkitty-processor
@@ -146,7 +149,6 @@ cloudkitty_pip_packages:
   - SQLAlchemy>=1.0.10
   - systemd-python
   - tooz
-  - uwsgi
 
 ## (Qdrouterd) integration
 # TODO(ansmith): Change structure when more backends will be supported
