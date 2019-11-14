@@ -66,10 +66,10 @@ cloudkitty_pip_install_args: "{{ pip_install_options | default('') }}"
 cloudkitty_venv_tag: "{{ venv_tag | default('untagged') }}"
 cloudkitty_bin: "/openstack/venvs/cloudkitty-{{ cloudkitty_venv_tag }}/bin"
 
-cloudkitty_git_repo: https://git.openstack.org/openstack/cloudkitty
+cloudkitty_git_repo: https://opendev.org/openstack/cloudkitty
 cloudkitty_git_install_branch: master
 
-cloudkitty_upper_constraints_url: "{{ requirements_git_url | default('https://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt?h=' ~ requirements_git_install_branch | default('master')) }}"
+cloudkitty_upper_constraints_url: "{{ requirements_git_url | default('https://releases.openstack.org/constraints/upper/' ~ requirements_git_install_branch | default('master')) }}"
 cloudkitty_git_constraints:
   - "git+{{ cloudkitty_git_repo }}@{{ cloudkitty_git_install_branch }}#egg=cloudkitty"
   - "--constraint {{ cloudkitty_upper_constraints_url }}"
