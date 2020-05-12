@@ -163,9 +163,3 @@ cloudkitty_oslomsg_amqp1_enabled: "{{ cloudkitty_oslomsg_rpc_transport == 'amqp'
 
 cloudkitty_optional_oslomsg_amqp1_pip_packages:
   - oslo.messaging[amqp1]
-
-# This variable is used by the repo_build process to determine
-# which host group to check for members of before building the
-# pip packages required by this role. The value is picked up
-# by the py_pkgs lookup.
-cloudkitty_role_project_group: cloudkitty_all
