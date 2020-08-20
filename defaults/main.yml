@@ -87,12 +87,14 @@ cloudkitty_output_backend: cloudkitty.backend.file.FileBackend
 cloudkitty_output_pipeline: osrf
 cloudkitty_output_basepath: /var/cloudkitty/reports
 
-cloudkitty_db_setup_host: "{{ ('galera_all' in groups) | ternary(groups['galera_all'][0], 'localhost') }}"
+cloudkitty_db_setup_host: "{{ openstack_db_setup_host | default('localhost') }}"
+cloudkitty_db_setup_python_interpreter: "{{ openstack_db_setup_python_interpreter | default((cloudkitty_db_setup_host == 'localhost') | ternary(ansible_playbook_python, ansible_python['executable'])) }}"
 cloudkitty_galera_address: "{{ galera_address | default('127.0.0.1') }}"
 cloudkitty_galera_database: cloudkitty
 cloudkitty_galera_user: cloudkitty
+cloudkitty_galera_port: 3306
 cloudkitty_database_connection: >-
-  mysql+pymysql://{{ cloudkitty_galera_user }}:{{ cloudkitty_container_mysql_password }}@{{ cloudkitty_galera_address }}/{{ cloudkitty_galera_database }}?charset=utf8
+  mysql+pymysql://{{ cloudkitty_galera_user }}:{{ cloudkitty_container_mysql_password }}@{{ cloudkitty_galera_address }}:{{ cloudkitty_galera_port }}/{{ cloudkitty_galera_database }}?charset=utf8
 
 cloudkitty_wsgi_threads: 1
 cloudkitty_wsgi_processes_max: 16

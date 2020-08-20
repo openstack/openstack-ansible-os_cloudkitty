@@ -44,6 +44,9 @@
     - inventory_hostname == groups['cloudkitty_all'][0]
   vars:
     _oslodb_setup_host: "{{ cloudkitty_db_setup_host }}"
+    _oslodb_ansible_python_interpreter: "{{ cloudkitty_db_setup_python_interpreter }}"
+    _oslodb_setup_endpoint: "{{ cloudkitty_galera_address }}"
+    _oslodb_setup_port: "{{ cloudkitty_galera_port }}"
     _oslodb_databases:
       - name: "{{ cloudkitty_galera_database }}"
         users:
