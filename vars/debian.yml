@@ -18,7 +18,6 @@ cache_timeout: 600
 
 cloudkitty_distro_packages:
   - git
-  - python-systemd
   - python3-systemd
   - libxml2
 
