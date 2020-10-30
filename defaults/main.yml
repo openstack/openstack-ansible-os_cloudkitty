@@ -98,7 +98,7 @@ cloudkitty_database_connection: >-
 
 cloudkitty_wsgi_threads: 1
 cloudkitty_wsgi_processes_max: 16
-cloudkitty_wsgi_processes: "{{ [[ansible_processor_vcpus|default(1), 1] | max * 2, cloudkitty_wsgi_processes_max] | min }}"
+cloudkitty_wsgi_processes: "{{ [[(ansible_processor_vcpus//ansible_processor_threads_per_core)|default(1), 1] | max * 2, cloudkitty_wsgi_processes_max] | min }}"
 cloudkitty_uwsgi_bind_address: 0.0.0.0
 
 ## Service Type and Data
