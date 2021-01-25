@@ -71,7 +71,6 @@ cloudkitty_git_install_branch: master
 
 cloudkitty_upper_constraints_url: "{{ requirements_git_url | default('https://releases.openstack.org/constraints/upper/' ~ requirements_git_install_branch | default('master')) }}"
 cloudkitty_git_constraints:
-  - "git+{{ cloudkitty_git_repo }}@{{ cloudkitty_git_install_branch }}#egg=cloudkitty"
   - "--constraint {{ cloudkitty_upper_constraints_url }}"
 
 cloudkitty_notification_topics: notifications
@@ -145,7 +144,7 @@ cloudkitty_services:
     start_order: 2
 
 cloudkitty_pip_packages:
-  - cloudkitty
+  - "git+{{ cloudkitty_git_repo }}@{{ cloudkitty_git_install_branch }}#egg=cloudkitty"
   - cryptography
   - msgpack-python
   - osprofiler
