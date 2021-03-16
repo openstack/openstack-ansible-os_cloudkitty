@@ -33,10 +33,6 @@
       dest: "/etc/cloudkitty/api_paste.ini"
       config_overrides: "{{ cloudkitty_api_paste_ini_overrides }}"
       config_type: "ini"
-    - src: "policy.json.j2"
-      dest: "/etc/cloudkitty/policy.json-{{ cloudkitty_venv_tag }}"
-      config_overrides: "{{ cloudkitty_policy_overrides }}"
-      config_type: "json"
     - src: "cloudkitty-metrics.yml.j2"
       dest: "/etc/cloudkitty/metrics.yml"
       config_overrides: "{{ cloudkitty_metrics_overrides }}"
@@ -45,4 +41,28 @@
     - Restart cloudkitty services
     - Restart uwsgi services
   tags:
+    - cloudkitty-config
+
+- name: Implement policy.yaml if there are overrides configured
+  config_template:
+    dest: "/etc/cloudkitty/policy.yaml"
+    content: "{{ cloudkitty_policy_overrides }}"
+    owner: "{{ cloudkitty_system_user_name }}"
+    group: "{{ cloudkitty_system_group_name }}"
+    mode: "0644"
+    config_type: "yaml"
+  when:
+    - cloudkitty_policy_overrides | length > 0
+  tags:
+    - cloudkitty-policy-override
+    - cloudkitty-config
+
+- name: Remove legacy policy.yaml file
+  file:
+    path: "/etc/cloudkitty/policy.yaml"
+    state: absent
+  when:
+    - cloudkitty_policy_overrides | length == 0
+  tags:
+    - cloudkitty-policy-override
     - cloudkitty-config
