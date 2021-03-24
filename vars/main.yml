@@ -41,7 +41,7 @@ uwsgi_cloudkitty_services: |-
          and ('wsgi_app' in value and value['wsgi_app']) %}
   {%     set _ = value.update(
             {
-             'wsgi_venv': cloudkitty_bin,
+             'wsgi_venv': cloudkitty_bin | dirname,
              'uwsgi_uid': cloudkitty_system_user_name,
              'uwsgi_guid': cloudkitty_system_group_name,
              'uwsgi_processes': cloudkitty_wsgi_processes,
