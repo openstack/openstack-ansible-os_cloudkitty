@@ -27,7 +27,7 @@ cloudkitty_service_setup_host_python_interpreter: "{{ openstack_service_setup_ho
 
 # Set the package install state for distribution and pip packages
 # Options are 'present' and 'latest'
-cloudkitty_package_state: "latest"
+cloudkitty_package_state: "{{ package_state | default('latest') }}"
 cloudkitty_pip_package_state: "latest"
 
 cloudkitty_service_user_name: cloudkitty
@@ -78,11 +78,12 @@ cloudkitty_git_constraints:
   - "--constraint {{ cloudkitty_upper_constraints_url }}"
 
 cloudkitty_notification_topics: notifications
-cloudkitty_collected_services: compute
 cloudkitty_collector: gnocchi
 cloudkitty_service_project_domain_id: default
 cloudkitty_service_project_name: "service"
 cloudkitty_service_user_domain_id: default
+cloudkitty_service_in_ldap: "{{ service_ldap_backend_enabled | default(False) }}"
+cloudkitty_service_role_name: "admin"
 cloudkitty_system_service_name: "cloudkitty-api"
 
 cloudkitty_keystone_auth_plugin: password
@@ -95,17 +96,17 @@ cloudkitty_db_setup_python_interpreter: "{{ openstack_db_setup_python_interprete
 cloudkitty_galera_address: "{{ galera_address | default('127.0.0.1') }}"
 cloudkitty_galera_database: cloudkitty
 cloudkitty_galera_user: cloudkitty
-cloudkitty_galera_port: 3306
+cloudkitty_galera_port: "{{ galera_port | default('3306') }}"
 cloudkitty_database_connection: >-
   mysql+pymysql://{{ cloudkitty_galera_user }}:{{ cloudkitty_container_mysql_password }}@{{ cloudkitty_galera_address }}:{{ cloudkitty_galera_port }}/{{ cloudkitty_galera_database }}?charset=utf8
 
 cloudkitty_wsgi_threads: 1
 cloudkitty_wsgi_processes_max: 16
 cloudkitty_wsgi_processes: "{{ [[(ansible_facts['processor_vcpus']//ansible_facts['processor_threads_per_core'])|default(1), 1] | max * 2, cloudkitty_wsgi_processes_max] | min }}"
-cloudkitty_uwsgi_bind_address: 0.0.0.0
+cloudkitty_uwsgi_bind_address: "{{ openstack_service_bind_address | default('0.0.0.0') }}"
 
 ## Service Type and Data
-cloudkitty_service_region: RegionOne
+cloudkitty_service_region: "{{ service_region | default('RegionOne') }}"
 cloudkitty_service_name: cloudkitty
 cloudkitty_service_port: 8089
 cloudkitty_service_proto: http
