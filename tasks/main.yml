@@ -114,6 +114,7 @@
 - import_tasks: service_setup.yml
   vars:
     _service_adminuri_insecure: "{{ keystone_service_adminuri_insecure }}"
+    _service_in_ldap: "{{ cloudkitty_service_in_ldap }}"
     _service_setup_host: "{{ cloudkitty_service_setup_host }}"
     _service_setup_host_python_interpreter: "{{ cloudkitty_service_setup_host_python_interpreter }}"
     _service_project_name: "{{ cloudkitty_service_project_name }}"
@@ -123,7 +124,7 @@
         password: "{{ cloudkitty_service_password }}"
         role: "rating"
       - name: "{{ cloudkitty_service_user_name }}"
-        role: admin
+        role: "{{ cloudkitty_service_role_name }}"
     _service_endpoints:
       - service: "{{ cloudkitty_service_name }}"
         interface: "public"
