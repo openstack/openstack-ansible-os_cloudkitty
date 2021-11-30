@@ -16,7 +16,7 @@
 # limitations under the License.
 
 - name: Drop cloudkitty Config(s)
-  config_template:
+  openstack.config_template.config_template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
     owner: "{{ cloudkitty_system_user_name }}"
@@ -44,7 +44,7 @@
     - cloudkitty-config
 
 - name: Implement policy.yaml if there are overrides configured
-  config_template:
+  openstack.config_template.config_template:
     dest: "/etc/cloudkitty/policy.yaml"
     content: "{{ cloudkitty_policy_overrides }}"
     owner: "{{ cloudkitty_system_user_name }}"
