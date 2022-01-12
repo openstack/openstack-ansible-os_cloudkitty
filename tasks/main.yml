@@ -39,7 +39,12 @@
   tags:
     - always
 
-- import_tasks: db_setup.yml
+- include_role:
+    name: openstack.osa.db_setup
+    apply:
+      tags:
+        - common-db
+        - cloudkitty-config
   when:
     - _cloudkitty_is_first_play_host
   vars:
@@ -53,10 +58,14 @@
           - username: "{{ cloudkitty_galera_user }}"
             password: "{{ cloudkitty_container_mysql_password }}"
   tags:
-    - common-db
-    - cloudkitty-config
+    - always
 
-- import_tasks: mq_setup.yml
+- include_role:
+    name: openstack.osa.mq_setup
+    apply:
+      tags:
+        - common-mq
+        - cloudkitty-config
   when:
     - _cloudkitty_is_first_play_host
   vars:
@@ -71,8 +80,7 @@
     _oslomsg_notify_vhost: "{{ cloudkitty_oslomsg_notify_vhost }}"
     _oslomsg_notify_transport: "{{ cloudkitty_oslomsg_notify_transport }}"
   tags:
-    - common-mq
-    - cloudkitty-config
+    - always
 
 - import_tasks: cloudkitty_pre_install.yml
   tags:
@@ -111,7 +119,12 @@
     - uwsgi
 
 
-- import_tasks: service_setup.yml
+- include_role:
+    name: openstack.osa.service_setup
+    apply:
+      tags:
+        - common-service
+        - cloudkitty-config
   vars:
     _service_adminuri_insecure: "{{ keystone_service_adminuri_insecure }}"
     _service_in_ldap: "{{ cloudkitty_service_in_ldap }}"
@@ -141,7 +154,7 @@
         description: "OpenStack Rating Service"
   when: _cloudkitty_is_first_play_host
   tags:
-    - cloudkitty-config
+    - always
 
 - import_tasks: cloudkitty_db_sync.yml
   when:
