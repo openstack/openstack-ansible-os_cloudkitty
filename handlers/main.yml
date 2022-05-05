@@ -26,15 +26,6 @@
     - "Restart cloudkitty services"
     - "venv changed"
 
-# NOTE (noonedeadpunk): Remove this task after Xena release
-- name: Remove obsoleted policy.json
-  file:
-    path: "/etc/cloudkitty/policy.json"
-    state: absent
-  listen:
-    - "Restart cloudkitty services"
-    - "venv changed"
-
 - name: Start services
   systemd:
     name: "{{ item.service_name }}"
