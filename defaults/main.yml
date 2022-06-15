@@ -30,8 +30,6 @@ cloudkitty_service_setup_host_python_interpreter: "{{ openstack_service_setup_ho
 cloudkitty_package_state: "{{ package_state | default('latest') }}"
 cloudkitty_pip_package_state: "latest"
 
-cloudkitty_service_user_name: cloudkitty
-
 ## Oslo Messaging info
 
 # RPC
@@ -79,13 +77,16 @@ cloudkitty_git_constraints:
 
 cloudkitty_notification_topics: notifications
 cloudkitty_collector: gnocchi
+cloudkitty_service_user_name: cloudkitty
 cloudkitty_service_project_domain_id: default
 cloudkitty_service_project_name: "service"
 cloudkitty_service_user_domain_id: default
 cloudkitty_service_in_ldap: "{{ service_ldap_backend_enabled | default(False) }}"
-cloudkitty_service_role_name: "admin"
-cloudkitty_system_service_name: "cloudkitty-api"
-
+cloudkitty_service_role_names:
+  - admin
+  - rating
+  - service
+cloudkitty_service_token_roles_required: "{{ openstack_service_token_roles_required | default(True) }}"
 cloudkitty_keystone_auth_plugin: password
 cloudkitty_output_backend: cloudkitty.backend.file.FileBackend
 cloudkitty_output_pipeline: osrf
@@ -114,6 +115,8 @@ cloudkitty_uwsgi_bind_address: "{{ openstack_service_bind_address | default('0.0
 ## Service Type and Data
 cloudkitty_service_region: "{{ service_region | default('RegionOne') }}"
 cloudkitty_service_name: cloudkitty
+cloudkitty_service_type: rating
+cloudkitty_service_description: "OpenStack Rating Service"
 cloudkitty_service_port: 8089
 cloudkitty_service_proto: http
 cloudkitty_service_publicuri_proto: "{{ openstack_service_publicuri_proto | default(cloudkitty_service_proto) }}"

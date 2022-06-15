@@ -140,9 +140,7 @@
     _service_users:
       - name: "{{ cloudkitty_service_user_name }}"
         password: "{{ cloudkitty_service_password }}"
-        role: "rating"
-      - name: "{{ cloudkitty_service_user_name }}"
-        role: "{{ cloudkitty_service_role_name }}"
+        role: "{{ cloudkitty_service_role_names }}"
     _service_endpoints:
       - service: "{{ cloudkitty_service_name }}"
         interface: "public"
@@ -155,8 +153,8 @@
         url: "{{ cloudkitty_service_adminurl }}"
     _service_catalog:
       - name: "{{ cloudkitty_service_name }}"
-        type: "rating"
-        description: "OpenStack Rating Service"
+        type: "{{ cloudkitty_service_type }}"
+        description: "{{ cloudkitty_service_description }}"
   when: _cloudkitty_is_first_play_host
   tags:
     - always

@@ -47,8 +47,9 @@ username = {{ cloudkitty_service_user_name }}
 auth_url = {{ keystone_service_adminurl }}
 auth_type = {{ cloudkitty_keystone_auth_plugin }}
 region_name = {{ cloudkitty_service_region }}
-service_token_roles_required = True
-service_token_roles = {{ cloudkitty_service_role_name }}
+service_token_roles_required = {{ cloudkitty_service_token_roles_required | bool }}
+service_token_roles = {{ cloudkitty_service_role_names | join(',') }}
+service_type = {{ cloudkitty_service_type }}
 
 [oslo_messaging_amqp]
 
