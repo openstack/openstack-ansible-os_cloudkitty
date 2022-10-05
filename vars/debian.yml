@@ -23,6 +23,6 @@ cloudkitty_distro_packages:
 
 cloudkitty_devel_distro_packages:
   - build-essential
-  - git-core
+  - git
   - libsystemd-dev
   - libxml2-dev
