@@ -25,6 +25,7 @@
   listen:
     - "Restart cloudkitty services"
     - "venv changed"
+    - "systemd service changed"
 
 - name: Start services
   systemd:
@@ -38,3 +39,4 @@
   listen:
     - "Restart cloudkitty services"
     - "venv changed"
+    - "systemd service changed"
