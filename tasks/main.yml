@@ -90,6 +90,26 @@
   tags:
     - cloudkitty-install
 
+- name: Create and install SSL certificates
+  include_role:
+    name: pki
+    tasks_from: main_certs.yml
+    apply:
+      tags:
+        - cloudkitty-config
+        - pki
+  vars:
+    pki_setup_host: "{{ cloudkitty_pki_setup_host }}"
+    pki_dir: "{{ cloudkitty_pki_dir }}"
+    pki_create_certificates: "{{ cloudkitty_user_ssl_cert is not defined and cloudkitty_user_ssl_key is not defined }}"
+    pki_regen_cert: "{{ cloudkitty_pki_regen_cert }}"
+    pki_certificates: "{{ cloudkitty_pki_certificates }}"
+    pki_install_certificates: "{{ cloudkitty_pki_install_certificates }}"
+  when:
+    - cloudkitty_backend_ssl
+  tags:
+    - always
+
 - name: Install the python venv
   import_role:
     name: "python_venv_build"

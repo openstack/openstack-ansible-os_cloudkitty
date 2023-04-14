@@ -26,6 +26,7 @@
     - "Restart cloudkitty services"
     - "venv changed"
     - "systemd service changed"
+    - "cert installed"
 
 - name: Start services
   systemd:
@@ -40,3 +41,4 @@
     - "Restart cloudkitty services"
     - "venv changed"
     - "systemd service changed"
+    - "cert installed"

@@ -111,6 +111,9 @@ cloudkitty_wsgi_threads: 1
 cloudkitty_wsgi_processes_max: 16
 cloudkitty_wsgi_processes: "{{ [[(ansible_facts['processor_vcpus']//ansible_facts['processor_threads_per_core'])|default(1), 1] | max * 2, cloudkitty_wsgi_processes_max] | min }}"
 cloudkitty_uwsgi_bind_address: "{{ openstack_service_bind_address | default('0.0.0.0') }}"
+cloudkitty_uwsgi_tls:
+  crt: "{{ cloudkitty_ssl_cert }}"
+  key: "{{ cloudkitty_ssl_key }}"
 
 ## Service Type and Data
 cloudkitty_service_region: "{{ service_region | default('RegionOne') }}"
@@ -150,6 +153,7 @@ cloudkitty_services:
     uwsgi_overrides: "{{ cloudkitty_api_uwsgi_overrides }}"
     uwsgi_port: "{{ cloudkitty_service_port }}"
     uwsgi_bind_address: "{{ cloudkitty_uwsgi_bind_address }}"
+    uwsgi_tls: "{{ cloudkitty_backend_ssl | ternary(cloudkitty_uwsgi_tls, {}) }}"
   cloudkitty-processor:
     group: cloudkitty_all
     service_name: cloudkitty-processor
@@ -178,3 +182,51 @@ cloudkitty_oslomsg_amqp1_enabled: "{{ cloudkitty_oslomsg_rpc_transport == 'amqp'
 
 cloudkitty_optional_oslomsg_amqp1_pip_packages:
   - oslo.messaging[amqp1]
+
+###
+### Backend TLS
+###
+
+# Define if communication between haproxy and service backends should be
+# encrypted with TLS.
+cloudkitty_backend_ssl: "{{ openstack_service_backend_ssl | default(False) }}"
+
+# Storage location for SSL certificate authority
+cloudkitty_pki_dir: "{{ openstack_pki_dir | default('/etc/openstack_deploy/pki') }}"
+
+# Delegated host for operating the certificate authority
+cloudkitty_pki_setup_host: "{{ openstack_pki_setup_host | default('localhost') }}"
+
+# cloudkitty server certificate
+cloudkitty_pki_keys_path: "{{ cloudkitty_pki_dir ~ '/certs/private/' }}"
+cloudkitty_pki_certs_path: "{{ cloudkitty_pki_dir ~ '/certs/certs/' }}"
+cloudkitty_pki_intermediate_cert_name: "{{ openstack_pki_service_intermediate_cert_name | default('ExampleCorpIntermediate') }}"
+cloudkitty_pki_regen_cert: ''
+cloudkitty_pki_san: "{{ openstack_pki_san | default('DNS:' ~ ansible_facts['hostname'] ~ ',IP:' ~ management_address) }}"
+cloudkitty_pki_certificates:
+  - name: "cloudkitty_{{ ansible_facts['hostname'] }}"
+    provider: ownca
+    cn: "{{ ansible_facts['hostname'] }}"
+    san: "{{ cloudkitty_pki_san }}"
+    signed_by: "{{ cloudkitty_pki_intermediate_cert_name }}"
+
+# cloudkitty destination files for SSL certificates
+cloudkitty_ssl_cert: /etc/cloudkitty/cloudkitty.pem
+cloudkitty_ssl_key: /etc/cloudkitty/cloudkitty.key
+
+# Installation details for SSL certificates
+cloudkitty_pki_install_certificates:
+  - src: "{{ cloudkitty_user_ssl_cert | default(cloudkitty_pki_certs_path ~ 'cloudkitty_' ~ ansible_facts['hostname'] ~ '-chain.crt') }}"
+    dest: "{{ cloudkitty_ssl_cert }}"
+    owner: "{{ cloudkitty_system_user_name }}"
+    group: "{{ cloudkitty_system_user_name }}"
+    mode: "0644"
+  - src: "{{ cloudkitty_user_ssl_key | default(cloudkitty_pki_keys_path ~ 'cloudkitty_' ~ ansible_facts['hostname'] ~ '.key.pem') }}"
+    dest: "{{ cloudkitty_ssl_key }}"
+    owner: "{{ cloudkitty_system_user_name }}"
+    group: "{{ cloudkitty_system_user_name }}"
+    mode: "0600"
+
+# Define user-provided SSL certificates
+#cloudkitty_user_ssl_cert: <path to cert on ansible deployment host>
+#cloudkitty_user_ssl_key: <path to cert on ansible deployment host>
