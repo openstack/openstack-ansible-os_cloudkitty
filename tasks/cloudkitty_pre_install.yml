@@ -15,7 +15,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-- name: create the system group
+- name: Create the system group
   group:
     name: "{{ cloudkitty_system_group_name }}"
     state: "present"
@@ -39,9 +39,9 @@
   file:
     path: "{{ item.path }}"
     state: directory
-    owner: "{{ item.owner|default(cloudkitty_system_user_name) }}"
-    group: "{{ item.group|default(cloudkitty_system_group_name) }}"
-    mode: "{{ item.mode|default('0755') }}"
+    owner: "{{ item.owner | default(cloudkitty_system_user_name) }}"
+    group: "{{ item.group | default(cloudkitty_system_group_name) }}"
+    mode: "{{ item.mode | default('0755') }}"
   with_items:
     - { path: "/openstack", mode: "0755", owner: "root", group: "root" }
     - { path: "/etc/cloudkitty" }
@@ -54,6 +54,6 @@
     state: directory
     owner: "{{ cloudkitty_system_user_name }}"
     group: "{{ cloudkitty_system_group_name }}"
-    mode: 0755
+    mode: "0755"
   tags:
     - cloudkitty-dirs

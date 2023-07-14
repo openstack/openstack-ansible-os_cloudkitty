@@ -43,7 +43,8 @@
   tags:
     - always
 
-- include_role:
+- name: Including osa.db_setup role
+  include_role:
     name: openstack.osa.db_setup
     apply:
       tags:
@@ -64,7 +65,8 @@
   tags:
     - always
 
-- include_role:
+- name: Including osa.mq_setup role
+  include_role:
     name: openstack.osa.mq_setup
     apply:
       tags:
@@ -86,7 +88,8 @@
   tags:
     - always
 
-- import_tasks: cloudkitty_pre_install.yml
+- name: Importing cloudkitty_pre_install tasks
+  import_tasks: cloudkitty_pre_install.yml
   tags:
     - cloudkitty-install
 
@@ -120,7 +123,8 @@
     venv_install_destination_path: "{{ cloudkitty_bin | dirname }}"
     venv_install_distro_package_list: "{{ cloudkitty_distro_packages }}"
     venv_pip_install_args: "{{ cloudkitty_pip_install_args }}"
-    venv_pip_packages: "{{ cloudkitty_pip_packages | union((cloudkitty_oslomsg_amqp1_enabled | bool) | ternary(cloudkitty_optional_oslomsg_amqp1_pip_packages, [])) }}"
+    venv_pip_packages: >-
+      {{ cloudkitty_pip_packages | union((cloudkitty_oslomsg_amqp1_enabled | bool) | ternary(cloudkitty_optional_oslomsg_amqp1_pip_packages, [])) }}
     venv_facts_when_changed:
       - section: "cloudkitty"
         option: "venv_tag"
@@ -128,7 +132,8 @@
   tags:
     - cloudkitty-install
 
-- import_tasks: cloudkitty_post_install.yml
+- name: Importing cloudkitty_post_install tasks
+  import_tasks: cloudkitty_post_install.yml
   tags:
     - cloudkitty-config
 
@@ -143,7 +148,8 @@
     - uwsgi
 
 
-- include_role:
+- name: Including osa.service_setup role
+  include_role:
     name: openstack.osa.service_setup
     apply:
       tags:
@@ -178,7 +184,8 @@
   tags:
     - always
 
-- import_tasks: cloudkitty_db_sync.yml
+- name: Importing cloudkitty_db_sync tasks
+  import_tasks: cloudkitty_db_sync.yml
   when:
     - _cloudkitty_is_first_play_host
   tags:
@@ -193,10 +200,10 @@
     systemd_tempd_prefix: openstack
     systemd_slice_name: cloudkitty
     systemd_lock_path: /var/lock/cloudkitty
-    systemd_CPUAccounting: true
-    systemd_BlockIOAccounting: true
-    systemd_MemoryAccounting: true
-    systemd_TasksAccounting: true
+    systemd_service_cpu_accounting: true
+    systemd_service_block_io_accounting: true
+    systemd_service_memory_accounting: true
+    systemd_service_tasks_accounting: true
     systemd_services:
       - service_name: "{{ service_var.service_name }}"
         enabled: "{{ service_var.enabled | default(True) }}"

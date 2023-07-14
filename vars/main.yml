@@ -13,7 +13,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-_cloudkitty_is_first_play_host: "{{ (cloudkitty_services['cloudkitty-api']['group'] in group_names and inventory_hostname == ((groups[cloudkitty_services['cloudkitty-api']['group']] | intersect(ansible_play_hosts)) | list)[0]) | bool }}"
+_cloudkitty_is_first_play_host: >-
+  {{
+    (cloudkitty_services['cloudkitty-api']['group'] in group_names and inventory_hostname == (
+      (groups[cloudkitty_services['cloudkitty-api']['group']] | intersect(ansible_play_hosts)) | list)[0]) | bool
+  }}
 
 #
 # Compile a list of the services on a host based on whether
