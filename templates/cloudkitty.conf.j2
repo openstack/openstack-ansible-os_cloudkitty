@@ -8,7 +8,7 @@ notification_topics = {{ cloudkitty_notification_topics }}
 use_journal = True
 
 ## Oslo Messaging RPC
-transport_url = {{ cloudkitty_oslomsg_rpc_transport }}://{% for host in cloudkitty_oslomsg_rpc_servers.split(',') %}{{ cloudkitty_oslomsg_rpc_userid }}:{{ cloudkitty_oslomsg_rpc_password }}@{{ host }}:{{ cloudkitty_oslomsg_rpc_port }}{% if not loop.last %},{% else %}/{{ cloudkitty_oslomsg_rpc_vhost }}{% if cloudkitty_oslomsg_rpc_use_ssl | bool %}?ssl=1&ssl_version={{ cloudkitty_oslomsg_rpc_ssl_version }}&ssl_ca_file={{ cloudkitty_oslomsg_rpc_ssl_ca_file }}{% else %}?ssl=0{% endif %}{% endif %}{% endfor %}
+transport_url = {{ cloudkitty_oslomsg_rpc_transport }}://{% for host in cloudkitty_oslomsg_rpc_servers.split(',') %}{{ cloudkitty_oslomsg_rpc_userid }}:{{ cloudkitty_oslomsg_rpc_password }}@{{ host }}:{{ cloudkitty_oslomsg_rpc_port }}{% if not loop.last %},{% else %}/{{ _cloudkitty_oslomsg_rpc_vhost_conf }}{% if cloudkitty_oslomsg_rpc_use_ssl | bool %}?ssl=1&ssl_version={{ cloudkitty_oslomsg_rpc_ssl_version }}&ssl_ca_file={{ cloudkitty_oslomsg_rpc_ssl_ca_file }}{% else %}?ssl=0{% endif %}{% endif %}{% endfor %}
 
 [api]
 port = {{ cloudkitty_service_port }}
@@ -57,9 +57,12 @@ service_type = {{ cloudkitty_service_type }}
 
 [oslo_messaging_rabbit]
 ssl = {{ cloudkitty_oslomsg_notify_use_ssl | bool }}
+rabbit_quorum_queue = {{ cloudkitty_oslomsg_rabbit_quorum_queues }}
+rabbit_quorum_delivery_limit = {{ cloudkitty_oslomsg_rabbit_quorum_delivery_limit }}
+rabbit_quorum_max_memory_bytes = {{ cloudkitty_oslomsg_rabbit_quorum_max_memory_bytes }}
 
 [oslo_messaging_notifications]
-transport_url = {{ cloudkitty_oslomsg_notify_transport }}://{% for host in cloudkitty_oslomsg_notify_servers.split(',') %}{{ cloudkitty_oslomsg_notify_userid }}:{{ cloudkitty_oslomsg_notify_password }}@{{ host }}:{{ cloudkitty_oslomsg_notify_port }}{% if not loop.last %},{% else %}/{{ cloudkitty_oslomsg_notify_vhost }}{% if cloudkitty_oslomsg_notify_use_ssl | bool %}?ssl=1&ssl_version={{ cloudkitty_oslomsg_notify_ssl_version }}&ssl_ca_file={{ cloudkitty_oslomsg_notify_ssl_ca_file }}{% else %}?ssl=0{% endif %}{% endif %}{% endfor %}
+transport_url = {{ cloudkitty_oslomsg_notify_transport }}://{% for host in cloudkitty_oslomsg_notify_servers.split(',') %}{{ cloudkitty_oslomsg_notify_userid }}:{{ cloudkitty_oslomsg_notify_password }}@{{ host }}:{{ cloudkitty_oslomsg_notify_port }}{% if not loop.last %},{% else %}/{{ _cloudkitty_oslomsg_notify_vhost_conf }}{% if cloudkitty_oslomsg_notify_use_ssl | bool %}?ssl=1&ssl_version={{ cloudkitty_oslomsg_notify_ssl_version }}&ssl_ca_file={{ cloudkitty_oslomsg_notify_ssl_ca_file }}{% else %}?ssl=0{% endif %}{% endif %}{% endfor %}
 
 [output]
 pipeline = {{ cloudkitty_output_pipeline }}

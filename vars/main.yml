@@ -19,6 +19,17 @@ _cloudkitty_is_first_play_host: >-
       (groups[cloudkitty_services['cloudkitty-api']['group']] | intersect(ansible_play_hosts)) | list)[0]) | bool
   }}
 
+_cloudkitty_oslomsg_rpc_vhost_conf: >-
+  {{
+    (cloudkitty_oslomsg_rpc_vhost is string) | ternary(
+      cloudkitty_oslomsg_rpc_vhost, cloudkitty_oslomsg_rpc_vhost | selectattr('state', 'eq', 'present') | map(attribute='name') | first)
+  }}
+_cloudkitty_oslomsg_notify_vhost_conf: >-
+  {{
+    (cloudkitty_oslomsg_notify_vhost is string) | ternary(
+      cloudkitty_oslomsg_notify_vhost, cloudkitty_oslomsg_notify_vhost | selectattr('state', 'eq', 'present') | map(attribute='name') | first)
+  }}
+
 #
 # Compile a list of the services on a host based on whether
 # the host is in the host group and the service is enabled.
