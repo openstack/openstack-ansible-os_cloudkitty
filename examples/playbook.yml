@@ -17,4 +17,4 @@
   tags:
     - cloudkitty
   roles:
-   - role: "os_cloudkitty"
+    - role: "os_cloudkitty"
