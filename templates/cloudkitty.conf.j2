@@ -58,6 +58,9 @@ service_type = {{ cloudkitty_service_type }}
 [oslo_messaging_rabbit]
 ssl = {{ cloudkitty_oslomsg_notify_use_ssl | bool }}
 rabbit_quorum_queue = {{ cloudkitty_oslomsg_rabbit_quorum_queues }}
+transient_quorum_queue = {{ cloudkitty_oslomsg_rabbit_transient_quorum_queues }}
+use_queue_manager = {{ cloudkitty_oslomsg_rabbit_queue_manager }}
+rabbit_stream_fanout = {{ cloudkitty_oslomsg_rabbit_stream_fanout }}
 rabbit_quorum_delivery_limit = {{ cloudkitty_oslomsg_rabbit_quorum_delivery_limit }}
 rabbit_quorum_max_memory_bytes = {{ cloudkitty_oslomsg_rabbit_quorum_max_memory_bytes }}
 
