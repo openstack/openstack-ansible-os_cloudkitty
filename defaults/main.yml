@@ -62,6 +62,7 @@ cloudkitty_oslomsg_rabbit_quorum_delivery_limit: "{{ oslomsg_rabbit_quorum_deliv
 cloudkitty_oslomsg_rabbit_quorum_max_memory_bytes: "{{ oslomsg_rabbit_quorum_max_memory_bytes | default(0) }}"
 
 # Notify
+cloudkitty_oslomsg_notify_configure: "{{ oslomsg_notify_configure | default(False) }}"
 cloudkitty_oslomsg_notify_host_group: "{{ oslomsg_notify_host_group | default('rabbitmq_all') }}"
 cloudkitty_oslomsg_notify_setup_host: >-
   {{ (cloudkitty_oslomsg_notify_host_group in groups) | ternary(groups[cloudkitty_oslomsg_notify_host_group][0], 'localhost') }}

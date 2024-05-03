@@ -87,6 +87,7 @@
     _oslomsg_notify_vhost: "{{ cloudkitty_oslomsg_notify_vhost }}"
     _oslomsg_notify_transport: "{{ cloudkitty_oslomsg_notify_transport }}"
     _oslomsg_notify_policies: "{{ cloudkitty_oslomsg_notify_policies }}"
+    _oslomsg_notify_configure: "{{ cloudkitty_oslomsg_notify_configure }}"
   tags:
     - always
 
