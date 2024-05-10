@@ -58,9 +58,10 @@ cloudkitty_oslomsg_rpc_ssl_version: "{{ oslomsg_rpc_ssl_version | default('TLSv1
 cloudkitty_oslomsg_rpc_ssl_ca_file: "{{ oslomsg_rpc_ssl_ca_file | default('') }}"
 ## RabbitMQ integration
 cloudkitty_oslomsg_rabbit_quorum_queues: "{{ oslomsg_rabbit_quorum_queues | default(True) }}"
-cloudkitty_oslomsg_rabbit_transient_quorum_queues: "{{ oslomsg_rabbit_transient_quorum_queues | default(cloudkitty_oslomsg_rabbit_quorum_queues) }}"
-cloudkitty_oslomsg_rabbit_queue_manager: "{{ oslomsg_rabbit_queue_manager | default(cloudkitty_oslomsg_rabbit_quorum_queues) }}"
 cloudkitty_oslomsg_rabbit_stream_fanout: "{{ oslomsg_rabbit_stream_fanout | default(cloudkitty_oslomsg_rabbit_quorum_queues) }}"
+cloudkitty_oslomsg_rabbit_transient_quorum_queues: "{{ oslomsg_rabbit_transient_quorum_queues | default(cloudkitty_oslomsg_rabbit_stream_fanout) }}"
+cloudkitty_oslomsg_rabbit_qos_prefetch_count: "{{ oslomsg_rabbit_qos_prefetch_count | default(cloudkitty_oslomsg_rabbit_stream_fanout | ternary(10, 0)) }}"
+cloudkitty_oslomsg_rabbit_queue_manager: "{{ oslomsg_rabbit_queue_manager | default(cloudkitty_oslomsg_rabbit_quorum_queues) }}"
 cloudkitty_oslomsg_rabbit_quorum_delivery_limit: "{{ oslomsg_rabbit_quorum_delivery_limit | default(0) }}"
 cloudkitty_oslomsg_rabbit_quorum_max_memory_bytes: "{{ oslomsg_rabbit_quorum_max_memory_bytes | default(0) }}"
 
