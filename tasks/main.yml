@@ -139,6 +139,7 @@
   import_tasks: cloudkitty_post_install.yml
   tags:
     - cloudkitty-config
+    - post-install
 
 - name: Import uwsgi role
   import_role:
