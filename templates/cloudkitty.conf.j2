@@ -17,7 +17,11 @@ port = {{ cloudkitty_service_port }}
 collector = {{ cloudkitty_collector }}
 
 [collector_{{ cloudkitty_collector }}]
+{% if cloudkitty_collector == 'gnocchi' %}
 auth_section = keystone_authtoken
+interface = internalURL
+region_name = {{ cloudkitty_service_region }}
+{% endif %}
 
 [cors]
 
@@ -34,7 +38,11 @@ connection_recycle_time = {{ cloudkitty_db_connection_recycle_time }}
 backend = {{ cloudkitty_collector }}
 
 [fetcher_{{ cloudkitty_collector }}]
+{% if cloudkitty_collector == 'gnocchi' %}
 auth_section = keystone_authtoken
+interface = internalURL
+region_name = {{ cloudkitty_service_region }}
+{% endif %}
 
 [keystone_authtoken]
 memcached_servers = {{ cloudkitty_memcached_servers }}
