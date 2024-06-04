@@ -88,5 +88,12 @@ backend = {{ cloudkitty_output_backend }}
 [state]
 
 [storage]
-backend = sqlalchemy
-version = 1
+backend = {{ cloudkitty_storage['backend'] }}
+version = {{ cloudkitty_storage['version'] }}
+
+{% if 'config' in cloudkitty_storage %}
+[storage_{{ cloudkitty_storage['backend'] }}]
+{%   for item, value in cloudkitty_storage['config'].items() %}
+{{ item }} = {{ value }}
+{%   endfor %}
+{% endif %}

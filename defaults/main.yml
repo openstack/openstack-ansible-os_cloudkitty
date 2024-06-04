@@ -117,6 +117,20 @@ cloudkitty_output_backend: cloudkitty.backend.file.FileBackend
 cloudkitty_output_pipeline: osrf
 cloudkitty_output_basepath: /var/cloudkitty/reports
 
+# Please define a storage for CloudKitty data in as a nested dictionary.
+# Keys `backend` and `version` are required. `config` contains extra
+# configuration for the storage backend when applicable.
+# For example:
+# cloudkitty_storage:
+#   backend: opensearch
+#   version: 2
+#   config:
+#     host = http://localhost:9200
+#     index_name = cloudkitty
+cloudkitty_storage:
+  backend: sqlalchemy
+  version: 1
+
 cloudkitty_db_setup_host: "{{ openstack_db_setup_host | default('localhost') }}"
 cloudkitty_db_setup_python_interpreter: >-
   {{
