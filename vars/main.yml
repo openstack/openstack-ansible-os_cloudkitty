@@ -16,7 +16,7 @@
 _cloudkitty_is_first_play_host: >-
   {{
     (cloudkitty_services['cloudkitty-api']['group'] in group_names and inventory_hostname == (
-      (groups[cloudkitty_services['cloudkitty-api']['group']] | intersect(ansible_play_hosts)) | list)[0]) | bool
+      (groups[cloudkitty_services['cloudkitty-api']['group']] | select('in', ansible_play_hosts)) | list)[0]) | bool
   }}
 
 _cloudkitty_oslomsg_rpc_vhost_conf: >-
