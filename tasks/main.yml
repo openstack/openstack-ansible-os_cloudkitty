@@ -126,8 +126,7 @@
     venv_install_destination_path: "{{ cloudkitty_bin | dirname }}"
     venv_install_distro_package_list: "{{ cloudkitty_distro_packages }}"
     venv_pip_install_args: "{{ cloudkitty_pip_install_args }}"
-    venv_pip_packages: >-
-      {{ cloudkitty_pip_packages | union((cloudkitty_oslomsg_amqp1_enabled | bool) | ternary(cloudkitty_optional_oslomsg_amqp1_pip_packages, [])) }}
+    venv_pip_packages: "{{ cloudkitty_pip_packages }}"
     venv_facts_when_changed:
       - section: "cloudkitty"
         option: "venv_tag"

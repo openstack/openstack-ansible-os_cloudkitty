@@ -224,13 +224,6 @@ cloudkitty_pip_packages:
 # Memcached override
 cloudkitty_memcached_servers: "{{ memcached_servers }}"
 
-## (Qdrouterd) integration
-# TODO(ansmith): Change structure when more backends will be supported
-cloudkitty_oslomsg_amqp1_enabled: "{{ cloudkitty_oslomsg_rpc_transport == 'amqp' }}"
-
-cloudkitty_optional_oslomsg_amqp1_pip_packages:
-  - oslo.messaging[amqp1]
-
 ###
 ### Backend TLS
 ###
