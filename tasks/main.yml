@@ -16,7 +16,7 @@
 # limitations under the License.
 
 - name: Gather variables for each operating system
-  include_vars: "{{ lookup('first_found', params) }}"
+  ansible.builtin.include_vars: "{{ lookup('first_found', params) }}"
   vars:
     params:
       files:
@@ -31,20 +31,20 @@
     - always
 
 - name: Check init system
-  command: cat /proc/1/comm
+  ansible.builtin.command: cat /proc/1/comm
   changed_when: false
   register: _pid1_name
   tags:
     - always
 
 - name: Set the name of pid1
-  set_fact:
+  ansible.builtin.set_fact:
     pid1_name: "{{ _pid1_name.stdout }}"
   tags:
     - always
 
 - name: Including osa.db_setup role
-  include_role:
+  ansible.builtin.include_role:
     name: openstack.osa.db_setup
     apply:
       tags:
@@ -66,7 +66,7 @@
     - always
 
 - name: Including osa.mq_setup role
-  include_role:
+  ansible.builtin.include_role:
     name: openstack.osa.mq_setup
     apply:
       tags:
@@ -92,12 +92,12 @@
     - always
 
 - name: Importing cloudkitty_pre_install tasks
-  import_tasks: cloudkitty_pre_install.yml
+  ansible.builtin.import_tasks: cloudkitty_pre_install.yml
   tags:
     - cloudkitty-install
 
 - name: Create and install SSL certificates
-  include_role:
+  ansible.builtin.include_role:
     name: pki
     tasks_from: main_certs.yml
     apply:
@@ -117,7 +117,7 @@
     - always
 
 - name: Install the python venv
-  import_role:
+  ansible.builtin.import_role:
     name: "python_venv_build"
   vars:
     venv_python_executable: "{{ cloudkitty_venv_python_executable }}"
@@ -135,13 +135,13 @@
     - cloudkitty-install
 
 - name: Importing cloudkitty_post_install tasks
-  import_tasks: cloudkitty_post_install.yml
+  ansible.builtin.import_tasks: cloudkitty_post_install.yml
   tags:
     - cloudkitty-config
     - post-install
 
 - name: Import uwsgi role
-  import_role:
+  ansible.builtin.import_role:
     name: uwsgi
   vars:
     uwsgi_services: "{{ uwsgi_cloudkitty_services }}"
@@ -151,7 +151,7 @@
     - uwsgi
 
 - name: Including osa.service_setup role
-  include_role:
+  ansible.builtin.include_role:
     name: openstack.osa.service_setup
     apply:
       tags:
@@ -187,14 +187,14 @@
     - always
 
 - name: Importing cloudkitty_db_sync tasks
-  import_tasks: cloudkitty_db_sync.yml
+  ansible.builtin.import_tasks: cloudkitty_db_sync.yml
   when:
     - _cloudkitty_is_first_play_host
   tags:
     - cloudkitty-config
 
 - name: Run the systemd service role
-  include_role:
+  ansible.builtin.include_role:
     name: systemd_service
   vars:
     systemd_user_name: "{{ cloudkitty_system_user_name }}"
@@ -221,4 +221,4 @@
     - systemd-service
 
 - name: Flush handlers
-  meta: flush_handlers
+  ansible.builtin.meta: flush_handlers

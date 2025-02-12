@@ -16,7 +16,7 @@
 # limitations under the License.
 
 - name: Perform a cloudkitty DB sync
-  command: "{{ cloudkitty_bin }}/cloudkitty-dbsync upgrade"
+  ansible.builtin.command: "{{ cloudkitty_bin }}/cloudkitty-dbsync upgrade"
   become: true
   become_user: "{{ cloudkitty_system_user_name }}"
   changed_when: false
@@ -26,7 +26,7 @@
     - cloudkitty-command-bin
 
 - name: Init cloudkitty storage backend
-  command: "{{ cloudkitty_bin }}/cloudkitty-storage-init"
+  ansible.builtin.command: "{{ cloudkitty_bin }}/cloudkitty-storage-init"
   become: true
   become_user: "{{ cloudkitty_system_user_name }}"
   changed_when: false

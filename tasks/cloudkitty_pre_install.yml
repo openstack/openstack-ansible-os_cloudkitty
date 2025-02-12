@@ -16,7 +16,7 @@
 # limitations under the License.
 
 - name: Create the system group
-  group:
+  ansible.builtin.group:
     name: "{{ cloudkitty_system_group_name }}"
     state: "present"
     system: "yes"
@@ -24,7 +24,7 @@
     - cloudkitty-group
 
 - name: Create the cloudkitty system user
-  user:
+  ansible.builtin.user:
     name: "{{ cloudkitty_system_user_name }}"
     group: "{{ cloudkitty_system_group_name }}"
     comment: "{{ cloudkitty_system_comment }}"
@@ -36,7 +36,7 @@
     - cloudkitty-user
 
 - name: Create cloudkitty dir
-  file:
+  ansible.builtin.file:
     path: "{{ item.path }}"
     state: directory
     owner: "{{ item.owner | default(cloudkitty_system_user_name) }}"
@@ -49,7 +49,7 @@
     - cloudkitty-dirs
 
 - name: Create cloudkitty report dir
-  file:
+  ansible.builtin.file:
     path: "{{ cloudkitty_output_basepath }}"
     state: directory
     owner: "{{ cloudkitty_system_user_name }}"

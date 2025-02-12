@@ -58,7 +58,7 @@
     - cloudkitty-config
 
 - name: Remove legacy policy.yaml file
-  file:
+  ansible.builtin.file:
     path: "/etc/cloudkitty/policy.yaml"
     state: absent
   when:

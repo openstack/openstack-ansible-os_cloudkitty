@@ -14,7 +14,7 @@
 # limitations under the License.
 
 - name: Stop services
-  systemd:
+  ansible.builtin.systemd:
     name: "{{ item.service_name }}"
     state: "stopped"
   with_items: "{{ filtered_cloudkitty_services }}"
@@ -29,7 +29,7 @@
     - "cert installed"
 
 - name: Start services
-  systemd:
+  ansible.builtin.systemd:
     name: "{{ item.service_name }}"
     state: "started"
   with_items: "{{ filtered_cloudkitty_services }}"
