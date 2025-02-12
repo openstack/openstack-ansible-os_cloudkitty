@@ -17,7 +17,7 @@
 
 - name: Perform a cloudkitty DB sync
   command: "{{ cloudkitty_bin }}/cloudkitty-dbsync upgrade"
-  become: yes
+  become: true
   become_user: "{{ cloudkitty_system_user_name }}"
   changed_when: false
   tags:
@@ -27,7 +27,7 @@
 
 - name: Init cloudkitty storage backend
   command: "{{ cloudkitty_bin }}/cloudkitty-storage-init"
-  become: yes
+  become: true
   become_user: "{{ cloudkitty_system_user_name }}"
   changed_when: false
   tags:

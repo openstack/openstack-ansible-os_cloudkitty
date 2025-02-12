@@ -1,14 +1,13 @@
 ---
-
 - name: Gather cloudkitty facts
   hosts: cloudkitty_all
-  gather_facts: True
+  gather_facts: true
   tags:
     - always
 
 - name: Install cloudkitty services
   hosts: cloudkitty_all
-  gather_facts: False
+  gather_facts: false
   serial:
     - 1
     - "100%"

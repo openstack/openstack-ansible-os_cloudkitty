@@ -150,7 +150,6 @@
     - cloudkitty-config
     - uwsgi
 
-
 - name: Including osa.service_setup role
   include_role:
     name: openstack.osa.service_setup

@@ -14,7 +14,7 @@
 # limitations under the License.
 
 ## Verbosity Options
-debug: False
+debug: false
 
 # python venv executable
 cloudkitty_venv_python_executable: "{{ openstack_venv_python_executable | default('python3') }}"
@@ -196,7 +196,7 @@ cloudkitty_services:
     service_name: cloudkitty-api
     init_config_overrides: "{{ cloudkitty_api_init_overrides }}"
     start_order: 1
-    wsgi_app: True
+    wsgi_app: true
     wsgi_path: "{{ cloudkitty_bin }}/cloudkitty-api"
     uwsgi_overrides: "{{ cloudkitty_api_uwsgi_overrides }}"
     uwsgi_port: "{{ cloudkitty_service_port }}"
@@ -242,7 +242,7 @@ cloudkitty_pki_setup_host: "{{ openstack_pki_setup_host | default('localhost') }
 cloudkitty_pki_keys_path: "{{ cloudkitty_pki_dir ~ '/certs/private/' }}"
 cloudkitty_pki_certs_path: "{{ cloudkitty_pki_dir ~ '/certs/certs/' }}"
 cloudkitty_pki_intermediate_cert_name: "{{ openstack_pki_service_intermediate_cert_name | default('ExampleCorpIntermediate') }}"
-cloudkitty_pki_regen_cert: ''
+cloudkitty_pki_regen_cert: ""
 cloudkitty_pki_san: "{{ openstack_pki_san | default('DNS:' ~ ansible_facts['hostname'] ~ ',IP:' ~ management_address) }}"
 cloudkitty_pki_certificates:
   - name: "cloudkitty_{{ ansible_facts['hostname'] }}"
