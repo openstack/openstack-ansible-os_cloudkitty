@@ -197,7 +197,7 @@ cloudkitty_services:
     init_config_overrides: "{{ cloudkitty_api_init_overrides }}"
     start_order: 1
     wsgi_app: true
-    wsgi_path: "{{ cloudkitty_bin }}/cloudkitty-api"
+    wsgi: "cloudkitty.wsgi.api:application"
     uwsgi_overrides: "{{ cloudkitty_api_uwsgi_overrides }}"
     uwsgi_port: "{{ cloudkitty_service_port }}"
     uwsgi_bind_address: "{{ cloudkitty_uwsgi_bind_address }}"
