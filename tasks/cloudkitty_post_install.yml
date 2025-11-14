@@ -43,7 +43,7 @@
   tags:
     - cloudkitty-config
 
-- name: Implement policy.yaml if there are overrides configured
+- name: Place policy.yaml file
   openstack.config_template.config_template:
     dest: "/etc/cloudkitty/policy.yaml"
     content: "{{ cloudkitty_policy_overrides }}"
@@ -51,18 +51,6 @@
     group: "{{ cloudkitty_system_group_name }}"
     mode: "0644"
     config_type: "yaml"
-  when:
-    - cloudkitty_policy_overrides | length > 0
-  tags:
-    - cloudkitty-policy-override
-    - cloudkitty-config
-
-- name: Remove legacy policy.yaml file
-  ansible.builtin.file:
-    path: "/etc/cloudkitty/policy.yaml"
-    state: absent
-  when:
-    - cloudkitty_policy_overrides | length == 0
   tags:
     - cloudkitty-policy-override
     - cloudkitty-config
