@@ -49,7 +49,7 @@
     content: "{{ cloudkitty_policy_overrides }}"
     owner: "{{ cloudkitty_system_user_name }}"
     group: "{{ cloudkitty_system_group_name }}"
-    mode: "0644"
+    mode: "0640"
     config_type: "yaml"
   tags:
     - cloudkitty-policy-override
