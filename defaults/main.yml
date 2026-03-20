@@ -243,12 +243,14 @@ cloudkitty_pki_keys_path: "{{ cloudkitty_pki_dir ~ '/certs/private/' }}"
 cloudkitty_pki_certs_path: "{{ cloudkitty_pki_dir ~ '/certs/certs/' }}"
 cloudkitty_pki_intermediate_cert_name: "{{ openstack_pki_service_intermediate_cert_name | default('ExampleCorpIntermediate') }}"
 cloudkitty_pki_regen_cert: ""
-cloudkitty_pki_san: "{{ openstack_pki_san | default('DNS:' ~ ansible_facts['hostname'] ~ ',IP:' ~ management_address) }}"
+cloudkitty_pki_san: "{{ openstack_pki_san | default({'dns': [ansible_facts['hostname']], 'ip': [management_address]}) }}"
+cloudkitty_pki_backend: "{{ openstack_pki_backend | default('standalone') }}"
 cloudkitty_pki_certificates:
   - name: "cloudkitty_{{ ansible_facts['hostname'] }}"
-    provider: ownca
     cn: "{{ ansible_facts['hostname'] }}"
     san: "{{ cloudkitty_pki_san }}"
+    # standalone backend only
+    provider: ownca
     signed_by: "{{ cloudkitty_pki_intermediate_cert_name }}"
 
 # cloudkitty destination files for SSL certificates
@@ -257,17 +259,21 @@ cloudkitty_ssl_key: /etc/cloudkitty/cloudkitty.key
 
 # Installation details for SSL certificates
 cloudkitty_pki_install_certificates:
-  - src: "{{ cloudkitty_user_ssl_cert | default(cloudkitty_pki_certs_path ~ 'cloudkitty_' ~ ansible_facts['hostname'] ~ '-chain.crt') }}"
+  - name: "cloudkitty_{{ ansible_facts['hostname'] }}"
+    type: "certificate_chain"
     dest: "{{ cloudkitty_ssl_cert }}"
     owner: "{{ cloudkitty_system_user_name }}"
     group: "{{ cloudkitty_system_user_name }}"
-    mode: "0644"
-  - src: "{{ cloudkitty_user_ssl_key | default(cloudkitty_pki_keys_path ~ 'cloudkitty_' ~ ansible_facts['hostname'] ~ '.key.pem') }}"
+    # standalone backend only
+    src: "{{ cloudkitty_user_ssl_cert | default(cloudkitty_pki_certs_path ~ 'cloudkitty_' ~ ansible_facts['hostname'] ~ '-chain.crt') }}"
+  - name: "cloudkitty_{{ ansible_facts['hostname'] }}"
+    type: "private_key"
     dest: "{{ cloudkitty_ssl_key }}"
     owner: "{{ cloudkitty_system_user_name }}"
     group: "{{ cloudkitty_system_user_name }}"
-    mode: "0600"
+    # standalone backend only
+    src: "{{ cloudkitty_user_ssl_key | default(cloudkitty_pki_keys_path ~ 'cloudkitty_' ~ ansible_facts['hostname'] ~ '.key.pem') }}"
 
 # Define user-provided SSL certificates
-# cloudkitty_user_ssl_cert: <path to cert on ansible deployment host>
-# cloudkitty_user_ssl_key: <path to cert on ansible deployment host>
+cloudkitty_user_ssl_cert: ""
+cloudkitty_user_ssl_key: ""
