@@ -46,7 +46,7 @@ region_name = {{ cloudkitty_service_region }}
 
 [keystone_authtoken]
 memcached_servers = {{ cloudkitty_memcached_servers }}
-www_authenticate_uri = {{ keystone_service_internaluri }}
+www_authenticate_uri = {{ keystone_service_publicuri }}
 project_domain_id = {{ cloudkitty_service_project_domain_id }}
 project_name = {{ cloudkitty_service_project_name }}
 user_domain_id = {{ cloudkitty_service_user_domain_id }}
