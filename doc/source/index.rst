@@ -45,6 +45,12 @@ For more information, please refer to the `OpenStack-Ansible project documentati
 Always verify that the integration is successful and that the service behaves
 correctly before using it in a production environment.
 
+Default variables
+~~~~~~~~~~~~~~~~~
+
+.. literalinclude:: ../../defaults/main.yml
+   :language: yaml
+   :start-after: under the License.
 
 Required Variables
 ==================
@@ -76,8 +82,3 @@ Example Playbook
         cloudkitty_service_password: "SuperSecretePassword2"
         cloudkitty_oslomsg_rpc_password: "SuperSecretePassword3"
         cloudkitty_oslomsg_notify_password: "SuperSecretePassword4"
-
-Dependencies
-~~~~~~~~~~~~
-
-This role needs pip >= 7.1 installed on the target host.
