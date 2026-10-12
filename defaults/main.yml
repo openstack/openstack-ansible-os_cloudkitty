@@ -83,7 +83,7 @@ cloudkitty_oslomsg_notify_policies: []
 
 cloudkitty_system_group_name: cloudkitty
 cloudkitty_system_user_name: cloudkitty
-cloudkitty_system_comment: meow
+cloudkitty_system_comment: cloudkitty system user
 cloudkitty_system_shell: /bin/false
 cloudkitty_system_home_folder: "/var/lib/{{ cloudkitty_system_user_name }}"
 
