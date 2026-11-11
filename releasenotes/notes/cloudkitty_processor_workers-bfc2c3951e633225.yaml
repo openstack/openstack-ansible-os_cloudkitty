@@ -1,0 +1,11 @@
+---
+
+features:
+  - |
+    Introduced following new variables to the ``os_cloudkitty`` role which
+    allow to fine-tune amount of workers spawned by the Cloudkitty Processor
+    service:
+
+      - cloudkitty_orchestrator_threads
+      - cloudkitty_orchestrator_processes_max
+      - cloudkitty_orchestrator_processes

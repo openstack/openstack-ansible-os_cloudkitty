@@ -23,6 +23,11 @@ interface = internalURL
 region_name = {{ cloudkitty_service_region }}
 {% endif %}
 
+[orchestrator]
+max_workers = {{ cloudkitty_orchestrator_processes }}
+max_workers_reprocessing = {{ cloudkitty_orchestrator_processes }}
+max_threads = {{ cloudkitty_orchestrator_threads }}
+
 [cors]
 
 [cors.subdomain]
