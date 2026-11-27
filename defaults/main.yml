@@ -218,7 +218,7 @@ cloudkitty_services:
     start_order: 2
 
 cloudkitty_pip_packages:
-  - "git+{{ cloudkitty_git_repo }}@{{ cloudkitty_git_install_branch }}#egg=cloudkitty"
+  - "cloudkitty@git+{{ cloudkitty_git_repo }}@{{ cloudkitty_git_install_branch }}"
   - cryptography
   - msgpack-python
   - osprofiler
